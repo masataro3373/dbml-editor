@@ -1,0 +1,24 @@
+# 日本語コメント: DBML Editor Docker Compose 本番・VPC環境定義
+services:
+  dbml-editor:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: dbml-editor
+    restart: unless-stopped
+    ports:
+      # バックエンド Express + フロントエンド静的配信 (単一ポート)
+      - "3000:3000"
+    volumes:
+      # ログ出力ディレクトリの永続化
+      - ./logs:/app/logs
+      # プロジェクト・ストレージデータの永続化
+      - ./storage:/app/storage
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"

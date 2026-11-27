@@ -1,0 +1,266 @@
+/* 日本語コメント: ヘッダーコンポーネントスタイル (src/components/header/header.css) */
+
+.dbe-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  padding: 0 1rem;
+  gap: 1rem;
+  user-select: none;
+}
+
+.dbe-header-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.dbe-header-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--text-primary);
+  text-decoration: none;
+}
+
+/* メニューバー */
+.dbe-menubar {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.dbe-menu-item {
+  position: relative;
+}
+
+.dbe-menu-trigger {
+  padding: 0.35rem 0.65rem;
+  font-size: 0.82rem;
+  border-radius: 4px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.15s ease;
+}
+
+.dbe-menu-trigger:hover,
+.dbe-menu-item.active .dbe-menu-trigger {
+  background-color: var(--bg-tertiary, rgba(255, 255, 255, 0.08));
+  color: var(--text-primary);
+}
+
+/* ドロップダウンメニュー */
+.dbe-menu-dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  min-width: 200px;
+  background-color: var(--bg-card, var(--bg-panel, #252526));
+  border: 1px solid var(--border-color, #3c3c3c);
+  border-radius: 6px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  padding: 4px 0;
+  z-index: 10000;
+  display: none;
+}
+
+.dbe-menu-item.active .dbe-menu-dropdown {
+  display: block;
+}
+
+.dbe-menu-action {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 6px 12px;
+  font-size: 0.82rem;
+  color: var(--text-primary);
+  background: transparent;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 0.1s ease;
+  box-sizing: border-box;
+}
+
+.dbe-menu-action:hover {
+  background-color: var(--primary, #007acc);
+  color: var(--primary-text, #ffffff);
+  text-decoration: var(--active-text-decoration, none);
+  outline: var(--hover-outline, none);
+}
+
+/* 日本語コメント: プロジェクト未作成時の無効化メニュー項目スタイル */
+.dbe-menu-action:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  pointer-events: auto;
+}
+
+.dbe-menu-action:disabled:hover {
+  background-color: transparent;
+  color: var(--text-primary);
+  text-decoration: none;
+  outline: none;
+}
+
+.dbe-menu-action-icon {
+  width: 18px;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+.dbe-menu-separator {
+  height: 1px;
+  background-color: var(--border-color, #333333);
+  margin: 4px 0;
+}
+
+/* 中央ビュー切替タブ */
+.dbe-header-center {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.dbe-nav-tab {
+  padding: 0.35rem 0.75rem;
+  font-size: 0.8rem;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+
+.dbe-nav-tab:hover {
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+.dbe-nav-tab.active {
+  background-color: var(--bg-tertiary);
+  color: var(--text-primary);
+  font-weight: var(--active-font-weight, 600);
+  text-decoration: var(--active-text-decoration, none);
+  outline: var(--active-outline, none);
+  border-color: var(--border-color);
+}
+
+/* 右側ユーザーメニュー */
+.dbe-header-right {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* ユーザープロファイルメニュー (右端) */
+.dbe-user-menu-item {
+  position: relative;
+}
+
+.dbe-user-trigger {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0.35rem 0.65rem;
+  background: var(--bg-secondary, #252526);
+  border: 1px solid var(--border-color, #3c3c3c);
+  border-radius: 20px;
+  color: var(--text-primary);
+  cursor: pointer;
+  font-size: 0.82rem;
+  transition: all 0.15s ease;
+}
+
+.dbe-user-trigger:hover,
+.dbe-user-menu-item.active .dbe-user-trigger {
+  border-color: var(--primary, #007acc);
+}
+
+.dbe-user-avatar {
+  font-size: 1rem;
+}
+
+.dbe-user-name {
+  font-weight: 500;
+}
+
+.dbe-user-dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  min-width: 220px;
+  background-color: var(--bg-card, #252526);
+  border: 1px solid var(--border-color, #3c3c3c);
+  border-radius: 8px;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45);
+  padding: 8px 0;
+  z-index: 10000;
+  display: none;
+}
+
+.dbe-user-menu-item.active .dbe-user-dropdown {
+  display: block;
+}
+
+.dbe-user-dropdown-header {
+  padding: 8px 14px;
+  border-bottom: 1px solid var(--border-color, #333333);
+  margin-bottom: 4px;
+}
+
+.dbe-user-dropdown-title {
+  font-size: 0.85rem;
+  font-weight: bold;
+  color: var(--text-primary);
+}
+
+.dbe-user-dropdown-sub {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+/* 個人設定セクション (言語、テーマ) */
+.dbe-user-dropdown-section {
+  padding: 6px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.dbe-user-dropdown-section-title {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  margin-bottom: 2px;
+}
+
+.dbe-user-setting-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.8rem;
+  color: var(--text-primary);
+}
+
+.dbe-user-setting-select {
+  font-size: 0.78rem;
+  padding: 3px 6px;
+  border-radius: 4px;
+  background: var(--bg-primary, #1e1e1e);
+  border: 1px solid var(--border-color, #444444);
+  color: var(--text-primary);
+  outline: none;
+  cursor: pointer;
+}

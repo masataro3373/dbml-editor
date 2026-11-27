@@ -1,0 +1,1387 @@
+/* 日本語コメント: ER図ビュー スタイルシート (client/src/components/erd-view/erd-view.css)
+   v1の美しいUXとアニメーションを継承し、Light / Dark / Sepia の各テーマと完全連動します。 */
+
+.erd-view-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-color: var(--erd-canvas-bg, var(--bg-primary, #0f141c));
+  overflow: hidden;
+  user-select: none;
+}
+
+.erd-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  cursor: grab;
+}
+
+.erd-container:active {
+  cursor: grabbing;
+}
+
+/* 仮想無限キャンバス */
+.erd-canvas {
+  position: absolute;
+  width: 6000px;
+  height: 6000px;
+  transform-origin: 0 0;
+  left: 0;
+  top: 0;
+}
+
+/* グリッド背景描画レイヤー（テーマ連動・ギラつき防止） */
+.erd-canvas::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    linear-gradient(to right, var(--erd-grid-line-major, rgba(255, 255, 255, 0.08)) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--erd-grid-line-major, rgba(255, 255, 255, 0.08)) 1px, transparent 1px),
+    linear-gradient(to right, var(--erd-grid-line-minor, rgba(255, 255, 255, 0.03)) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--erd-grid-line-minor, rgba(255, 255, 255, 0.03)) 1px, transparent 1px);
+  background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* リレーション線の流れる点線アニメーション (edgeFlow) */
+@keyframes edgeFlow {
+  from {
+    stroke-dashoffset: 20;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* 関連線 (SVG) レイヤー */
+.erd-svg-layer {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.erd-ref-line {
+  fill: none;
+  stroke: var(--text-muted, #6272a4);
+  stroke-width: 2;
+  transition: stroke 0.15s, stroke-width 0.15s, opacity 0.2s;
+}
+
+/* ハイライト時の流れる点線アニメーション適用 */
+.erd-ref-line.highlight,
+.erd-edge-line.highlight,
+.erd-edge-path.highlighted {
+  stroke: var(--accent-color, var(--primary, #388bfd)) !important;
+  stroke-width: 3.5px !important;
+  stroke-dasharray: 6 4 !important;
+  animation: edgeFlow 1s linear infinite !important;
+  opacity: 1 !important;
+}
+
+/* 日本語コメント: 非ハイライト状態の自動FK線および手動リレーション線（視認性を確保しつつ背景化） */
+.erd-ref-line.dimmed,
+.erd-edge-line.dimmed {
+  opacity: 0.25 !important;
+}
+
+/* 日本語コメント: 自動FK線の端点（From側/To側）多重度ラベル（高視認性・太字・フチ取り付き） */
+.erd-ref-cardinality {
+  font-family: monospace, sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+  fill: var(--text-primary, #e2e8f0);
+  stroke: var(--erd-canvas-bg, var(--bg-primary, #0f141c));
+  stroke-width: 3.5px;
+  stroke-linejoin: round;
+  paint-order: stroke fill;
+  pointer-events: none;
+  user-select: none;
+  transition: opacity 0.2s, fill 0.2s;
+}
+
+.erd-ref-cardinality.dimmed {
+  opacity: 0.25 !important;
+}
+
+/* 日本語コメント: 手動リレーション線の端点多重度ラベル（高視認性・太字・フチ取り付き） */
+.erd-edge-cardinality {
+  font-family: monospace, sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+  fill: var(--text-primary, #e2e8f0);
+  stroke: var(--erd-canvas-bg, var(--bg-primary, #0f141c));
+  stroke-width: 3.5px;
+  stroke-linejoin: round;
+  paint-order: stroke fill;
+  pointer-events: none;
+  user-select: none;
+  transition: opacity 0.2s, fill 0.2s;
+}
+
+.erd-edge-cardinality.dimmed {
+  opacity: 0.25 !important;
+}
+
+/* 日本語コメント: 端点カーディナリティ（多重度）バッジグループ (背景プレート付き) */
+.erd-cardinality-badge {
+  pointer-events: none;
+  user-select: none;
+  transition: opacity 0.2s;
+}
+
+.erd-cardinality-badge.dimmed {
+  opacity: 0.25 !important;
+}
+
+/* 日本語コメント: 端点カーディナリティバッジの背景プレート（Light/Dark/Sepiaテーマ連動・高コントラスト） */
+.erd-cardinality-badge rect {
+  fill: var(--erd-panel-bg, var(--bg-card, #1e2530));
+  stroke: var(--border-color, #38455a);
+  stroke-width: 1.2px;
+  rx: 4px;
+  ry: 4px;
+  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.3));
+  transition: stroke 0.15s, fill 0.15s;
+}
+
+/* テーブルカード (ノード) レイヤー */
+.erd-nodes-layer {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* テーブルカード */
+.erd-table-card {
+  position: absolute;
+  width: 260px;
+  background: var(--erd-card-bg, var(--bg-card, #1e2530));
+  border: 1px solid var(--border-color, #303e54);
+  border-radius: 6px;
+  box-shadow: var(--shadow-md, 0 4px 14px rgba(0, 0, 0, 0.25));
+  pointer-events: auto;
+  color: var(--text-primary, #e2e8f0);
+  font-family: inherit;
+  transition: box-shadow 0.15s, border-color 0.15s;
+}
+
+/* 日本語コメント: ワイド幅モード時のテーブルカード幅（340px拡張） */
+.erd-canvas.wide-mode .erd-table-card,
+.erd-table-card.wide {
+  width: 340px;
+}
+
+.erd-table-card:hover {
+  border-color: var(--primary, #58a6ff);
+  box-shadow: 0 6px 20px rgba(59, 130, 246, 0.25);
+}
+
+.erd-table-card.highlight {
+  border: 2px solid var(--primary, #58a6ff);
+  box-shadow: 0 0 16px rgba(59, 130, 246, 0.45);
+}
+
+/* テーブルカード選択時のハイライト (選択中テーブル) */
+.erd-table-card.selected {
+  border: 2px solid var(--primary, #3b82f6) !important;
+  box-shadow: 0 0 16px rgba(59, 130, 246, 0.6) !important;
+  opacity: 1 !important;
+  z-index: 25;
+}
+
+/* テーブルカード選択時の関連テーブルハイライト (接続先テーブル) */
+.erd-table-card.connected {
+  border: 2px solid #06b6d4 !important;
+  box-shadow: 0 0 12px rgba(6, 182, 212, 0.5) !important;
+  opacity: 1 !important;
+  z-index: 20;
+}
+
+/* 日本語コメント: テーブルカード選択時の無関係テーブルの表示（可読性を保つため opacity: 0.55 に改善） */
+.erd-table-card.dimmed {
+  opacity: 0.55 !important;
+  transition: opacity 0.2s;
+}
+
+/* カードヘッダー（グラデーション適用） */
+.erd-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background: var(--erd-header-gradient, linear-gradient(135deg, rgba(31, 36, 44, 0.95) 0%, rgba(13, 17, 23, 0.95) 100%));
+  border-bottom: 1px solid var(--border-color, #303e54);
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  cursor: grab;
+  font-size: 13px;
+  font-weight: 600;
+  transition: background 0.15s;
+}
+
+.erd-card-header:active {
+  cursor: grabbing;
+}
+
+.erd-card-title-group {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.erd-card-title-line {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.erd-table-note-icon {
+  font-size: 11px;
+  cursor: help;
+  user-select: none;
+}
+
+.erd-card-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--text-primary, #ffffff);
+}
+
+.erd-card-subtitle {
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--text-secondary, #94a3b8);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.erd-card-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.erd-card-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 13px;
+  color: var(--text-secondary, #8b949e);
+  padding: 2px 4px;
+  border-radius: 3px;
+  line-height: 1;
+}
+
+.erd-card-btn:hover {
+  color: var(--text-primary, #ffffff);
+  background: var(--bg-hover, rgba(125, 125, 125, 0.15));
+}
+
+.erd-card-btn.btn-remove-node:hover {
+  color: #ef4444 !important;
+  background: rgba(239, 68, 68, 0.15) !important;
+}
+
+/* カードボディ (カラムリスト) */
+.erd-card-body {
+  padding: 4px 0;
+  font-size: 12px;
+  overflow-x: hidden;
+}
+
+/* スキーマ名バッジ (複数スキーマ混在表示用) */
+.erd-schema-badge {
+  font-size: 10px;
+  padding: 1px 5px;
+  border-radius: 3px;
+  background: var(--bg-tertiary, rgba(125, 125, 125, 0.15));
+  color: var(--text-secondary, #94a3b8);
+  margin-right: 4px;
+  font-family: monospace;
+}
+
+/* カラム折りたたみ省略表示行 */
+.erd-field-more-row {
+  text-align: center;
+  font-style: italic;
+  font-size: 11px;
+  color: var(--text-secondary, #94a3b8);
+  padding: 6px 12px;
+  user-select: none;
+  background: var(--bg-tertiary, rgba(125, 125, 125, 0.05));
+  border-top: 1px dashed var(--border-color, rgba(125, 125, 125, 0.2));
+}
+
+/* カラム行 */
+.erd-field-row {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px 12px;
+  transition: background 0.1s;
+  color: var(--text-primary, #e2e8f0);
+}
+
+.erd-field-row:hover {
+  background: var(--bg-hover, rgba(125, 125, 125, 0.08));
+}
+
+/* 検索キーワードにヒットしたカラム行のゴールド黄色ハイライト */
+.erd-field-row.search-match-field {
+  border-left: 3px solid #f1e05a !important;
+  background-color: rgba(241, 224, 90, 0.35) !important;
+}
+
+.erd-field-left {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  overflow: hidden;
+}
+
+.erd-pk-badge {
+  font-size: 9px;
+  font-weight: 700;
+  background: #f1e05a;
+  color: #1a1a1a;
+  padding: 1px 4px;
+  border-radius: 3px;
+  line-height: 1.1;
+}
+
+/* Not Null 属性バッジ */
+.erd-nn-badge {
+  font-size: 9px;
+  font-weight: 700;
+  background: #3b82f6;
+  color: #ffffff;
+  padding: 1px 4px;
+  border-radius: 3px;
+  line-height: 1.1;
+}
+
+/* Unique 属性バッジ */
+.erd-uq-badge {
+  font-size: 9px;
+  font-weight: 700;
+  background: #10b981;
+  color: #ffffff;
+  padding: 1px 4px;
+  border-radius: 3px;
+  line-height: 1.1;
+}
+
+.erd-field-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--text-primary, #e2e8f0);
+}
+
+.erd-field-type {
+  font-size: 11px;
+  color: var(--text-secondary, #94a3b8);
+  font-family: monospace;
+  margin-left: 8px;
+  white-space: nowrap;
+}
+
+/* ツールバー (下部中央フローティング) */
+.erd-bottom-toolbar {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--erd-panel-bg, var(--bg-card, rgba(24, 31, 42, 0.88)));
+  border: 1px solid var(--border-color, #38455a);
+  padding: 6px 14px;
+  border-radius: 30px;
+  backdrop-filter: blur(10px);
+  box-shadow: var(--shadow-lg, 0 6px 24px rgba(0, 0, 0, 0.35));
+  z-index: 100;
+}
+
+.erd-bottom-toolbar button {
+  background: transparent;
+  border: none;
+  color: var(--text-primary, #cbd5e1);
+  font-size: 13px;
+  padding: 6px 12px;
+  border-radius: 18px;
+  cursor: pointer;
+  transition: all 0.15s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.erd-bottom-toolbar button:hover {
+  background: var(--bg-hover, rgba(125, 125, 125, 0.15));
+  color: var(--primary, #58a6ff);
+}
+
+.erd-bottom-toolbar .separator {
+  width: 1px;
+  height: 18px;
+  background: var(--border-color, #38455a);
+  margin: 0 4px;
+}
+
+.erd-zoom-text {
+  font-size: 12px;
+  font-family: monospace;
+  color: var(--text-secondary, #94a3b8);
+  min-width: 44px;
+  text-align: center;
+}
+
+/* 右上コントロールパネル（開閉トグル機構） */
+.erd-top-controls {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  display: flex;
+  flex-direction: column;
+  background: var(--erd-panel-bg, var(--bg-card, rgba(24, 31, 42, 0.88)));
+  border: 1px solid var(--border-color, #38455a);
+  border-radius: 8px;
+  backdrop-filter: blur(10px);
+  box-shadow: var(--shadow-md, 0 4px 18px rgba(0, 0, 0, 0.35));
+  z-index: 100;
+  font-size: 13px;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+}
+
+.erd-top-controls-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 6px 12px;
+  cursor: pointer;
+  user-select: none;
+  font-weight: 600;
+  font-size: 12px;
+  color: var(--text-secondary, #94a3b8);
+  border-bottom: 1px solid var(--border-color, rgba(125, 125, 125, 0.15));
+  transition: color 0.15s, background-color 0.15s;
+}
+
+.erd-top-controls-toggle:hover {
+  color: var(--text-primary, #ffffff);
+  background: var(--bg-hover, rgba(125, 125, 125, 0.1));
+}
+
+.erd-controls-header-left {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.erd-controls-arrow {
+  font-size: 10px;
+  transition: transform 0.2s ease;
+}
+
+.erd-top-controls-content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+}
+
+/* 折りたたみ時（ピル状態） */
+.erd-top-controls.collapsed {
+  border-radius: 20px;
+  box-shadow: var(--shadow-sm, 0 2px 8px rgba(0, 0, 0, 0.2));
+}
+
+.erd-top-controls.collapsed .erd-top-controls-toggle {
+  border-bottom: none;
+  padding: 6px 14px;
+}
+
+.erd-top-controls.collapsed .erd-top-controls-content {
+  display: none;
+}
+
+.erd-select-mode {
+  background: var(--erd-subtle-bg, var(--bg-secondary, #161c24));
+  border: 1px solid var(--border-color, #38455a);
+  color: var(--text-primary, #e2e8f0);
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  outline: none;
+}
+
+.btn-save-erd-layout {
+  background: var(--primary, #2563eb);
+  border: 1px solid var(--primary, #2563eb);
+  color: #fff;
+  padding: 5px 14px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+}
+
+.btn-save-erd-layout:hover:not(:disabled) {
+  filter: brightness(1.15);
+}
+
+.btn-save-erd-layout:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* 保存成功時（インラインアニメーション） */
+.btn-save-erd-layout.btn-saved {
+  background: #2ea043 !important;
+  border-color: #2ea043 !important;
+  color: #ffffff !important;
+  box-shadow: 0 0 10px rgba(46, 160, 67, 0.5);
+}
+
+/* 左上ERD情報インジケーター */
+.erd-title-badge {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  background: var(--erd-panel-bg, var(--bg-card, rgba(24, 31, 42, 0.88)));
+  border: 1px solid var(--border-color, #38455a);
+  padding: 8px 14px;
+  border-radius: 8px;
+  backdrop-filter: blur(10px);
+  box-shadow: var(--shadow-md, 0 4px 18px rgba(0, 0, 0, 0.35));
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: background-color 0.15s, border-color 0.15s, box-shadow 0.15s;
+}
+
+.erd-title-badge:hover {
+  background: var(--bg-secondary, rgba(30, 41, 59, 0.95));
+  border-color: var(--primary, #58a6ff);
+  box-shadow: 0 6px 22px rgba(88, 166, 255, 0.25);
+}
+
+.erd-title-badge h4 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary, #fff);
+}
+
+/* 日本語コメント: 検索ボックスラッパー (クリアボタン配置用) */
+.erd-search-wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* 検索ボックス */
+.erd-search-input {
+  background: var(--erd-subtle-bg, var(--bg-secondary, #161c24));
+  border: 1px solid var(--border-color, #38455a);
+  color: var(--text-primary, #e2e8f0);
+  padding: 5px 26px 5px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  width: 140px;
+  outline: none;
+  transition: border-color 0.15s, width 0.15s;
+}
+
+.erd-search-input:focus {
+  border-color: var(--primary, #58a6ff);
+  width: 180px;
+}
+
+/* 日本語コメント: 検索ボックスクリアボタン (✕) */
+.erd-search-clear-btn {
+  position: absolute;
+  right: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--text-muted, #8b949e);
+  font-size: 11px;
+  line-height: 1;
+  cursor: pointer;
+  transition: color 0.15s, background-color 0.15s;
+}
+
+.erd-search-clear-btn:hover {
+  color: var(--text-primary);
+  background-color: var(--bg-hover, var(--bg-tertiary));
+}
+
+.erd-search-clear-btn.visible {
+  display: flex;
+}
+
+/* 検索一致（ゴールド黄色化） */
+.erd-table-card.search-match {
+  border: 2px solid #f1e05a !important;
+  box-shadow: 0 0 10px rgba(241, 224, 90, 0.4) !important;
+  opacity: 1 !important;
+}
+
+.erd-table-card.search-match .erd-card-header {
+  background: rgba(241, 224, 90, 0.25) !important;
+}
+
+.erd-table-card.search-dimmed {
+  opacity: 0.22 !important;
+  filter: grayscale(60%);
+  transition: opacity 0.2s, filter 0.2s;
+}
+
+/* メモカード (付箋) レイヤー */
+.erd-memos-layer {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  pointer-events: none;
+  z-index: 8;
+}
+
+/* 付箋風メモカード */
+.erd-memo-card {
+  position: absolute;
+  width: 220px;
+  min-height: 130px;
+  background: #fef08a;
+  color: #1e293b;
+  border: 1px solid #facc15;
+  border-radius: 6px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+  pointer-events: auto;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  resize: both;
+}
+
+.erd-memo-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 10px;
+  background: #fde047;
+  cursor: grab;
+  font-size: 11px;
+  font-weight: 600;
+  user-select: none;
+}
+
+.erd-memo-header:active {
+  cursor: grabbing;
+}
+
+.erd-memo-btn-delete {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 12px;
+  color: #854d0e;
+  padding: 0 4px;
+  line-height: 1;
+}
+
+.erd-memo-btn-delete:hover {
+  color: #dc2626;
+}
+
+.erd-memo-body {
+  flex: 1;
+  padding: 8px 10px;
+  display: flex;
+}
+
+.erd-memo-textarea {
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  resize: none;
+  font-family: inherit;
+  font-size: 12px;
+  line-height: 1.4;
+  color: #1e293b;
+}
+
+/* ボタンスタイル */
+.btn-erd-action {
+  background: var(--erd-subtle-bg, var(--bg-secondary, #161c24));
+  border: 1px solid var(--border-color, #38455a);
+  color: var(--text-primary, #e2e8f0);
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.btn-erd-action:hover {
+  background: var(--bg-hover, rgba(125, 125, 125, 0.1));
+  border-color: var(--primary, #58a6ff);
+}
+
+/* 表示制御チェックボックスグループ */
+.erd-toggle-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  color: var(--text-secondary, #94a3b8);
+}
+
+.erd-toggle-label {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.erd-toggle-label input[type="checkbox"] {
+  cursor: pointer;
+  margin: 0;
+}
+
+/* グループ枠 (Boxes) レイヤー (最背面) */
+.erd-boxes-layer {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  pointer-events: none;
+  z-index: 3;
+}
+
+/* グループ枠カード */
+.erd-box-card {
+  position: absolute;
+  min-width: 200px;
+  min-height: 150px;
+  background: rgba(56, 139, 253, 0.08);
+  border: 2px dashed rgba(88, 166, 255, 0.6);
+  border-radius: 8px;
+  pointer-events: auto;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  resize: both;
+  overflow: hidden;
+  transition: border-color 0.15s, background-color 0.15s;
+}
+
+.erd-box-card:hover {
+  box-shadow: var(--shadow-md, 0 4px 12px rgba(0, 0, 0, 0.15));
+}
+
+.erd-box-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 10px;
+  background: rgba(56, 139, 253, 0.2);
+  cursor: grab;
+  user-select: none;
+}
+
+.erd-box-header:active {
+  cursor: grabbing;
+}
+
+.erd-box-title-input {
+  background: transparent;
+  border: none;
+  outline: none;
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--text-primary, #fff);
+  font-family: inherit;
+  width: 80%;
+}
+
+.erd-box-btn-delete {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 12px;
+  color: var(--text-secondary, #94a3b8);
+  line-height: 1;
+}
+
+.erd-box-btn-delete:hover {
+  color: #ef4444;
+}
+
+/* カラム接続ポート (アンカー) */
+.erd-port {
+  position: absolute;
+  top: 50%;
+  width: 10px;
+  height: 10px;
+  background: var(--primary, #58a6ff);
+  border: 2px solid var(--erd-card-bg, var(--bg-card, #1e2530));
+  border-radius: 50%;
+  transform: translateY(-50%);
+  opacity: 0;
+  transition: opacity 0.15s, transform 0.15s, background-color 0.15s;
+  cursor: crosshair;
+  z-index: 20;
+}
+
+.erd-field-row:hover .erd-port {
+  opacity: 0.85;
+}
+
+.erd-port:hover {
+  opacity: 1 !important;
+  transform: translateY(-50%) scale(1.4);
+  background: #79c0ff;
+  box-shadow: 0 0 8px rgba(88, 166, 255, 0.8);
+}
+
+.erd-port.left {
+  left: -5px;
+}
+
+.erd-port.right {
+  right: -5px;
+}
+
+/* 手動リレーション線 (SVG) */
+.erd-edge-line {
+  fill: none;
+  stroke: #38bdf8;
+  stroke-width: 2.5;
+  stroke-dasharray: 6 3;
+  cursor: pointer;
+  pointer-events: stroke;
+  transition: stroke 0.15s, stroke-width 0.15s, opacity 0.2s;
+}
+
+.erd-edge-line:hover {
+  stroke: #06b6d4 !important;
+  stroke-width: 3.5px !important;
+  stroke-dasharray: 6 3;
+  opacity: 1 !important;
+}
+
+/* 日本語コメント: 手動リレーション線の多重度バッジの非ハイライト表示（視認性を確保しつつ背景化） */
+.erd-edge-badge.dimmed {
+  opacity: 0.25 !important;
+}
+
+/* ドラッグ接続中の仮線 */
+#erd-temp-line {
+  stroke: var(--primary, #58a6ff);
+  stroke-width: 2.5;
+  stroke-dasharray: 4 4;
+  pointer-events: none;
+}
+
+/* 多重度バッジ (SVG) */
+.erd-edge-badge {
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.erd-edge-badge rect {
+  fill: var(--erd-card-bg, var(--bg-card, #1e2530));
+  stroke: #38bdf8;
+  stroke-width: 1.5;
+  transition: stroke 0.15s, fill 0.15s;
+}
+
+.erd-edge-badge:hover rect {
+  fill: var(--bg-secondary, #1e293b);
+  stroke: var(--primary, #60a5fa);
+  stroke-width: 2;
+}
+
+/* 日本語コメント: 手動リレーション多重度バッジテキスト（視認性向上のため12pxに拡大） */
+.erd-edge-badge text {
+  fill: var(--text-primary, #e2e8f0);
+  font-family: monospace, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  text-anchor: middle;
+  dominant-baseline: central;
+  user-select: none;
+}
+
+/* リレーション編集モーダル */
+.erd-modal-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--overlay-bg, rgba(0, 0, 0, 0.6));
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+}
+
+.erd-modal-backdrop.hidden {
+  display: none;
+}
+
+.erd-edge-modal {
+  background: var(--erd-card-bg, var(--bg-card, #1e2530));
+  border: 1px solid var(--border-color, #38455a);
+  border-radius: 8px;
+  width: 420px;
+  max-width: 90vw;
+  box-shadow: var(--shadow-lg, 0 10px 30px rgba(0, 0, 0, 0.5));
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: erdModalIn 0.18s ease-out;
+}
+
+@keyframes erdModalIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.erd-edge-modal-header {
+  padding: 12px 16px;
+  background: var(--erd-subtle-bg, var(--bg-secondary, #161c24));
+  border-bottom: 1px solid var(--border-color, #38455a);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.erd-edge-modal-header h3 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary, #ffffff);
+}
+
+.erd-edge-modal-close {
+  background: none;
+  border: none;
+  color: var(--text-secondary, #94a3b8);
+  font-size: 18px;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.erd-edge-modal-close:hover {
+  color: var(--text-primary, #fff);
+}
+
+.erd-edge-modal-body {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  font-size: 13px;
+  color: var(--text-primary, #e2e8f0);
+}
+
+.erd-modal-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.erd-modal-form-group label {
+  font-size: 12px;
+  color: var(--text-secondary, #94a3b8);
+}
+
+.erd-modal-endpoint {
+  padding: 6px 10px;
+  background: var(--erd-subtle-bg, var(--bg-secondary, #161c24));
+  border: 1px solid var(--border-color, #38455a);
+  border-radius: 4px;
+  font-family: monospace;
+  font-size: 12px;
+  color: var(--primary, #58a6ff);
+}
+
+.erd-modal-input,
+.erd-modal-select,
+.erd-modal-textarea {
+  padding: 6px 10px;
+  background: var(--erd-subtle-bg, var(--bg-secondary, #161c24));
+  border: 1px solid var(--border-color, #38455a);
+  border-radius: 4px;
+  color: var(--text-primary, #fff);
+  font-size: 13px;
+  outline: none;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+
+.erd-modal-textarea {
+  resize: vertical;
+  min-height: 80px;
+  line-height: 1.5;
+}
+
+.erd-modal-input:focus,
+.erd-modal-select:focus,
+.erd-modal-textarea:focus {
+  border-color: var(--primary, #58a6ff);
+}
+
+.erd-edge-modal-footer {
+  padding: 12px 16px;
+  background: var(--erd-subtle-bg, var(--bg-secondary, #161c24));
+  border-top: 1px solid var(--border-color, #38455a);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.erd-modal-actions-right {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-modal-delete {
+  background: transparent;
+  border: 1px solid var(--danger, #ef4444);
+  color: var(--danger, #ef4444);
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.btn-modal-delete:hover {
+  background: var(--danger, #ef4444);
+  color: #fff;
+}
+
+.btn-modal-cancel {
+  background: transparent;
+  border: 1px solid var(--border-color, #38455a);
+  color: var(--text-secondary, #94a3b8);
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.btn-modal-cancel:hover {
+  color: var(--text-primary, #fff);
+  background: var(--bg-hover, rgba(125, 125, 125, 0.1));
+}
+
+.btn-modal-save {
+  background: var(--primary, #2563eb);
+  border: 1px solid var(--primary, #2563eb);
+  color: #fff;
+  padding: 6px 16px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-modal-save:hover {
+  filter: brightness(1.15);
+}
+
+/* 空キャンバス時の案内メッセージプレースホルダー */
+.erd-empty-canvas-guide {
+  position: absolute;
+  top: 120px;
+  left: 120px;
+  border: 2px dashed var(--border-color, #38455a);
+  border-radius: 12px;
+  padding: 40px 60px;
+  background: var(--erd-panel-bg, var(--bg-card, rgba(24, 31, 42, 0.75)));
+  backdrop-filter: blur(8px);
+  text-align: center;
+  pointer-events: none;
+  user-select: none;
+  color: var(--text-primary, #e2e8f0);
+  box-shadow: var(--shadow-lg, 0 10px 30px rgba(0, 0, 0, 0.4));
+  max-width: 520px;
+}
+
+.erd-empty-guide-icon {
+  font-size: 42px;
+  margin-bottom: 12px;
+}
+
+.erd-empty-guide-title {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: var(--text-primary, #ffffff);
+}
+
+.erd-empty-guide-text {
+  font-size: 13px;
+  color: var(--text-secondary, #94a3b8);
+  line-height: 1.6;
+}
+
+/* グループ枠カラーパレット (6色選択) */
+.erd-box-color-palette {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 6px 0;
+}
+
+.erd-color-swatch {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+  outline: none;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  transition: transform 0.15s, border-color 0.15s, box-shadow 0.15s;
+}
+
+.erd-color-swatch:hover {
+  transform: scale(1.15);
+}
+
+.erd-color-swatch.selected {
+  border-color: #ffffff !important;
+  transform: scale(1.22);
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.6) !important;
+}
+
+/* ==========================================================================
+   日本語コメント: ER図タイトル・バージョン浮動スタンプカード (.erd-info-card)
+   キャンバス左上に配置され、ズーム・パンと完全連動
+   ========================================================================== */
+.erd-info-card {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background: var(--erd-panel-bg, var(--bg-card, rgba(24, 31, 42, 0.92)));
+  border: 1.5px solid var(--primary, #3b82f6);
+  border-radius: 8px;
+  padding: 10px 16px;
+  box-shadow: var(--shadow-md, 0 4px 16px rgba(0, 0, 0, 0.35));
+  z-index: 10;
+  cursor: pointer;
+  user-select: none;
+  min-width: 200px;
+  max-width: 380px;
+  transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
+}
+
+.erd-info-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent-color, #60a5fa);
+  box-shadow: 0 6px 20px rgba(59, 130, 246, 0.35);
+}
+
+.erd-info-card-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.erd-info-card-icon {
+  font-size: 16px;
+}
+
+.erd-info-card-title {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-primary, #ffffff);
+  white-space: nowrap;
+}
+
+.erd-info-card-version {
+  margin-top: 4px;
+  font-size: 11px;
+  font-family: monospace, sans-serif;
+  color: var(--text-secondary, #94a3b8);
+}
+
+/* 日本語コメント: ER図タイトルスタンプ内の概要メモ表示 */
+.erd-info-card-memo {
+  margin-top: 8px;
+  padding-top: 6px;
+  border-top: 1px dashed var(--border-color, rgba(125, 125, 125, 0.25));
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--text-secondary, #94a3b8);
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* ==========================================================================
+   日本語コメント: スキーマノート (DBML Note) レイヤー & カードスタイル
+   ========================================================================== */
+.erd-notes-layer {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  pointer-events: none;
+  z-index: 12;
+}
+
+.erd-schema-note-card {
+  position: absolute;
+  min-width: 180px;
+  min-height: 110px;
+  background: var(--erd-card-bg, var(--bg-card, #1e2530));
+  border: 2px solid #3b82f6;
+  border-radius: 8px;
+  box-shadow: var(--shadow-md, 0 4px 18px rgba(0, 0, 0, 0.3));
+  pointer-events: auto;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  resize: both;
+  overflow: hidden;
+  overscroll-behavior: contain;
+  transition: box-shadow 0.15s;
+}
+
+.erd-schema-note-card:hover {
+  box-shadow: 0 6px 22px rgba(59, 130, 246, 0.25);
+}
+
+.erd-schema-note-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 10px;
+  background: #3b82f6;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: grab;
+  user-select: none;
+}
+
+.erd-schema-note-header:active {
+  cursor: grabbing;
+}
+
+.erd-schema-note-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 80%;
+}
+
+.erd-schema-note-btn-delete {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1;
+  padding: 0 4px;
+  transition: color 0.15s;
+}
+
+.erd-schema-note-btn-delete:hover {
+  color: #fecaca;
+}
+
+.erd-schema-note-body {
+  flex: 1;
+  margin-right: 14px;
+  margin-bottom: 14px;
+  padding: 8px 10px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: var(--erd-card-bg, var(--bg-card, #1e2530));
+  border-radius: 0 0 4px 0;
+}
+
+/* 日本語コメント: リサイズ操作中の一時的スクロール抑制 (スクロール競合の完全根絶) */
+.erd-schema-note-card.is-resizing .erd-schema-note-body {
+  overflow-y: hidden !important;
+}
+
+.erd-schema-note-content {
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--text-primary, #e2e8f0);
+  white-space: pre-wrap;
+  word-break: break-word;
+  user-select: text;
+}
+
+/* 日本語コメント: ER図情報設定モーダルを一回り大きく表示するためのサイズ調整 */
+.erd-edge-modal.erd-info-modal {
+  width: 580px;
+  max-width: 94vw;
+}
+
+.erd-info-memo-textarea {
+  min-height: 110px;
+  resize: vertical;
+}

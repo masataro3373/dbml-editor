@@ -1,0 +1,216 @@
+/* 日本語コメント: テーブル一覧ビュースタイル (src/components/table-list/table-list-view.css)
+   v1に準拠したグリッドテーブル（固定ヘッダー、列幅リサイズ、テキスト三点リーダー省略）のスタイリングです。 */
+
+.dbe-table-list-view {
+  padding: 1.5rem 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.table-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.table-list-header h2 {
+  font-size: 1.15rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0;
+  color: var(--text-primary);
+}
+
+/* テーブルラッパー（スクロール可能領域） */
+.table-wrapper {
+  flex: 1;
+  min-height: 0;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  overflow: auto;
+  box-shadow: var(--shadow-sm);
+}
+
+/* 表形式テーブル本体 */
+.schema-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.875rem;
+  table-layout: fixed; /* 列幅手動リサイズに対応 */
+}
+
+.schema-table th {
+  background-color: var(--bg-secondary);
+  color: var(--text-secondary);
+  font-weight: 600;
+  padding: 11px 14px;
+  border-bottom: 2px solid var(--border-color);
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  user-select: none;
+  box-sizing: border-box;
+}
+
+.schema-table td {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-primary);
+  box-sizing: border-box;
+}
+
+.schema-table th,
+.schema-table td {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 行ホバーハイライト */
+.schema-table tbody tr:hover td {
+  background-color: var(--bg-secondary);
+}
+
+/* 列幅リサイズハンドル */
+.schema-table th.resizable {
+  position: sticky;
+}
+
+.schema-table th .resizer {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 6px;
+  height: 100%;
+  cursor: col-resize;
+  user-select: none;
+  z-index: 3;
+}
+
+.schema-table th .resizer:hover,
+.schema-table th .resizer.resizing {
+  background-color: var(--primary);
+}
+
+/* テーブル名リンク */
+.table-name-link {
+  color: var(--primary);
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.table-name-link:hover {
+  text-decoration: underline;
+  color: var(--primary-hover);
+}
+
+/* 削除アクションボタン */
+.btn-table-delete {
+  display: inline-block;
+  background-color: rgba(220, 38, 38, 0.08);
+  color: var(--danger);
+  border: 1px solid rgba(220, 38, 38, 0.3);
+  padding: 3px 10px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-table-delete:hover {
+  background-color: var(--danger);
+  color: #ffffff;
+  border-color: var(--danger);
+}
+
+/* 空状態表示 */
+.empty-table-cell {
+  text-align: center;
+  color: var(--text-muted);
+  padding: 3.5rem 1rem !important;
+  font-size: 0.95rem;
+}
+
+.placeholder-text {
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+/* 絞り込み検索入力欄 */
+.table-list-search-input {
+  padding: 0.4rem 0.75rem;
+  font-size: 0.8125rem;
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  color: var(--text-primary);
+  outline: none;
+  width: 260px;
+  transition: border-color var(--transition-fast, 0.15s ease);
+}
+
+.table-list-search-input:focus {
+  border-color: var(--primary);
+}
+
+/* 日本語コメント: テーブル一覧のカラーフィルタセレクト＆縦線バッジ整列 */
+.table-list-color-filter {
+  padding: 0.4rem 0.65rem;
+  font-size: 0.8125rem;
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  color: var(--text-primary);
+  outline: none;
+  cursor: pointer;
+}
+
+.table-list-color-filter:focus {
+  border-color: var(--border-focus, var(--primary));
+}
+
+.table-name-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+/* 画面下部統計ダッシュボードバー */
+.table-list-stats-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.6rem 1rem;
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  flex-shrink: 0;
+}
+
+.table-list-stats-bar .stats-title {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.table-list-stats-bar .stats-item b {
+  color: var(--text-primary);
+  font-weight: 700;
+}
+
+.table-list-stats-bar .stats-divider {
+  color: var(--border-color);
+}

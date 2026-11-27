@@ -1,0 +1,22 @@
+{
+  "server": {
+    "port": 3000,
+    "authMode": "local",
+    "sessionMaxAgeDays": 7,
+    "sessionSecret": "dbml-editor-v2-dev-secret-key-2026",
+    "logLevel": "info",
+    "logRetentionDays": 30,
+    "logCompress": false
+  },
+  "app": {
+    "appName": "DBML Editor",
+    "defaultDialect": "standard",
+    "defaultTheme": "light",
+    "defaultLocale": "ja",
+    "logLevel": "info",
+    "features": {
+      "showDevTools": false,
+      "enableDbmlPreview": true
+    }
+  }
+}

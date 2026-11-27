@@ -1,0 +1,174 @@
+/* 日本語コメント: マニュアルビューア用テーマ定義 (manual/viewer/viewer-themes.css)
+   本体 (tokens.css) の 10 テーマと localStorage ('dbml_editor_theme') で連動します。 */
+
+:root,
+html[data-theme="light"] {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8fafc;
+  --bg-tertiary: #f1f5f9;
+  --bg-hover: #e2e8f0;
+  --border-color: #e2e8f0;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #94a3b8;
+  --primary: #2563eb;
+  --primary-text: #ffffff;
+  --code-bg: #f1f5f9;
+  --font-family-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-family-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --bg-pattern-image: none;
+  --bg-pattern-size: auto;
+  --active-font-weight: 600;
+  --active-text-decoration: none;
+  --active-outline: none;
+}
+
+html[data-theme="dark"] {
+  --bg-primary: #0f172a;
+  --bg-secondary: #1e293b;
+  --bg-tertiary: #334155;
+  --bg-hover: #334155;
+  --border-color: #334155;
+  --text-primary: #f8fafc;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
+  --primary: #3b82f6;
+  --primary-text: #ffffff;
+  --code-bg: #162032;
+}
+
+html[data-theme="sepia"] {
+  --bg-primary: #fbf0d9;
+  --bg-secondary: #f5e8cf;
+  --bg-tertiary: #ebd4a7;
+  --bg-hover: #ebd4a7;
+  --border-color: #d6c3a5;
+  --text-primary: #433422;
+  --text-secondary: #6e5a44;
+  --text-muted: #8c775c;
+  --primary: #a05a2c;
+  --primary-text: #ffffff;
+  --code-bg: #f1e1c1;
+}
+
+html[data-theme="blueprint"] {
+  --bg-primary: #0a2540;
+  --bg-secondary: #0f3458;
+  --bg-tertiary: #1a4975;
+  --bg-hover: #1a4975;
+  --border-color: #2b6396;
+  --text-primary: #f0f8ff;
+  --text-secondary: #b8daf7;
+  --text-muted: #7cb2e0;
+  --primary: #38bdf8;
+  --primary-text: #062038;
+  --code-bg: #081e36;
+  --bg-pattern-image:
+    linear-gradient(to right, rgba(56, 189, 248, 0.14) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(56, 189, 248, 0.14) 1px, transparent 1px),
+    linear-gradient(to right, rgba(56, 189, 248, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(56, 189, 248, 0.05) 1px, transparent 1px);
+  --bg-pattern-size: 80px 80px, 80px 80px, 16px 16px, 16px 16px;
+}
+
+html[data-theme="pastel-spring"] {
+  --bg-primary: #fff5f8;
+  --bg-secondary: #ffe4ee;
+  --bg-tertiary: #ffd0e0;
+  --bg-hover: #ffd0e0;
+  --border-color: #f4b6ca;
+  --text-primary: #4a192c;
+  --text-secondary: #7d2d4b;
+  --text-muted: #a15572;
+  --primary: #db2777;
+  --primary-text: #ffffff;
+  --code-bg: #ffebf2;
+  --font-family-sans: "UD Digi Kyokasho NK-R", "UD Digi Kyokasho N-R", "Meiryo", sans-serif;
+  --bg-pattern-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140' viewBox='0 0 140 140'%3E%3Cg transform='translate(35,35)' fill='%23f9a8d4' fill-opacity='0.14' stroke='%23ec4899' stroke-opacity='0.16' stroke-width='1.3'%3E%3Cpath d='M0-2 C-4-8 -5-15 -2-17 L0-14 L2-17 C5-15 4-8 0-2 Z'/%3E%3Cpath d='M0-2 C-4-8 -5-15 -2-17 L0-14 L2-17 C5-15 4-8 0-2 Z' transform='rotate(72)'/%3E%3Cpath d='M0-2 C-4-8 -5-15 -2-17 L0-14 L2-17 C5-15 4-8 0-2 Z' transform='rotate(144)'/%3E%3Cpath d='M0-2 C-4-8 -5-15 -2-17 L0-14 L2-17 C5-15 4-8 0-2 Z' transform='rotate(216)'/%3E%3Cpath d='M0-2 C-4-8 -5-15 -2-17 L0-14 L2-17 C5-15 4-8 0-2 Z' transform='rotate(288)'/%3E%3Ccircle cx='0' cy='0' r='2' fill='%23ec4899' fill-opacity='0.18' stroke='none'/%3E%3C/g%3E%3Cg transform='translate(104,102) scale(0.8) rotate(22)' fill='%23f9a8d4' fill-opacity='0.14' stroke='%23ec4899' stroke-opacity='0.16' stroke-width='1.4'%3E%3Cpath d='M0-2 C-4-8 -5-15 -2-17 L0-14 L2-17 C5-15 4-8 0-2 Z'/%3E%3Cpath d='M0-2 C-4-8 -5-15 -2-17 L0-14 L2-17 C5-15 4-8 0-2 Z' transform='rotate(72)'/%3E%3Cpath d='M0-2 C-4-8 -5-15 -2-17 L0-14 L2-17 C5-15 4-8 0-2 Z' transform='rotate(144)'/%3E%3Cpath d='M0-2 C-4-8 -5-15 -2-17 L0-14 L2-17 C5-15 4-8 0-2 Z' transform='rotate(216)'/%3E%3Cpath d='M0-2 C-4-8 -5-15 -2-17 L0-14 L2-17 C5-15 4-8 0-2 Z' transform='rotate(288)'/%3E%3Ccircle cx='0' cy='0' r='2' fill='%23ec4899' fill-opacity='0.18' stroke='none'/%3E%3C/g%3E%3C/svg%3E");
+  --bg-pattern-size: 140px 140px;
+}
+
+html[data-theme="pastel-summer"] {
+  --bg-primary: #f2fbf4;
+  --bg-secondary: #dcfce7;
+  --bg-tertiary: #bbf7d0;
+  --bg-hover: #bbf7d0;
+  --border-color: #9ae6b4;
+  --text-primary: #14331d;
+  --text-secondary: #22543d;
+  --text-muted: #4a7c59;
+  --primary: #15803d;
+  --primary-text: #ffffff;
+  --code-bg: #e3f8e9;
+  --font-family-sans: "UD Digi Kyokasho NK-R", "UD Digi Kyokasho N-R", "Meiryo", sans-serif;
+  --bg-pattern-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140' viewBox='0 0 140 140'%3E%3Cg transform='translate(36,38) rotate(-18)'%3E%3Cpath d='M-15-4 L0 15 L15-4 Q0-11 -15-4 Z' fill='%23fb7185' fill-opacity='0.12' stroke='%23e11d48' stroke-opacity='0.15' stroke-width='1.4'/%3E%3Cpath d='M-16-5 Q0-13 16-5' fill='none' stroke='%2316a34a' stroke-opacity='0.2' stroke-width='3' stroke-linecap='round'/%3E%3Ccircle cx='-4' cy='1' r='1' fill='%2314331d' fill-opacity='0.18'/%3E%3Ccircle cx='4' cy='1' r='1' fill='%2314331d' fill-opacity='0.18'/%3E%3Ccircle cx='0' cy='6' r='1' fill='%2314331d' fill-opacity='0.18'/%3E%3C/g%3E%3Cg transform='translate(102,102) rotate(14)'%3E%3Cpath d='M-15-4 L0 15 L15-4 Q0-11 -15-4 Z' fill='%23fb7185' fill-opacity='0.12' stroke='%23e11d48' stroke-opacity='0.15' stroke-width='1.4'/%3E%3Cpath d='M-16-5 Q0-13 16-5' fill='none' stroke='%2316a34a' stroke-opacity='0.2' stroke-width='3' stroke-linecap='round'/%3E%3Ccircle cx='-4' cy='1' r='1' fill='%2314331d' fill-opacity='0.18'/%3E%3Ccircle cx='4' cy='1' r='1' fill='%2314331d' fill-opacity='0.18'/%3E%3Ccircle cx='0' cy='6' r='1' fill='%2314331d' fill-opacity='0.18'/%3E%3C/g%3E%3C/svg%3E");
+  --bg-pattern-size: 140px 140px;
+}
+
+html[data-theme="pastel-autumn"] {
+  --bg-primary: #fdf7f0;
+  --bg-secondary: #f5e6d3;
+  --bg-tertiary: #ebd3b5;
+  --bg-hover: #ebd3b5;
+  --border-color: #dfc19e;
+  --text-primary: #432818;
+  --text-secondary: #6f4528;
+  --text-muted: #8c6244;
+  --primary: #b45309;
+  --primary-text: #ffffff;
+  --code-bg: #f7ecde;
+  --font-family-sans: "UD Digi Kyokasho NK-R", "UD Digi Kyokasho N-R", "Meiryo", sans-serif;
+  --bg-pattern-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140' viewBox='0 0 140 140'%3E%3Cg fill='none' stroke='%23d97706' stroke-opacity='0.14' stroke-width='1.8'%3E%3Cellipse cx='34' cy='38' rx='14' ry='11' fill='%23fb923c' fill-opacity='0.08'/%3E%3Cellipse cx='34' cy='38' rx='7' ry='11'/%3E%3Cpath d='M34 27c0-4 2-6 5-6' stroke='%2365a30d' stroke-opacity='0.16' stroke-linecap='round'/%3E%3C/g%3E%3Cg transform='translate(102,100) rotate(-15)'%3E%3Cpath d='M0 14 L0 5 L-11 8 L-7 2 L-15-2 L-6-4 L-9-11 L-2-7 L0-15 L2-7 L9-11 L6-4 L15-2 L7 2 L11 8 L0 5 Z' fill='%23ea580c' fill-opacity='0.09' stroke='%23dc2626' stroke-opacity='0.15' stroke-width='1.3' stroke-linejoin='round'/%3E%3C/g%3E%3C/svg%3E");
+  --bg-pattern-size: 140px 140px;
+}
+
+html[data-theme="pastel-winter"] {
+  --bg-primary: #f6fbff;
+  --bg-secondary: #e0f2fe;
+  --bg-tertiary: #bae6fd;
+  --bg-hover: #bae6fd;
+  --border-color: #93c5fd;
+  --text-primary: #0f2942;
+  --text-secondary: #1e4976;
+  --text-muted: #4b749f;
+  --primary: #0284c7;
+  --primary-text: #ffffff;
+  --code-bg: #e6f3fe;
+  --font-family-sans: "UD Digi Kyokasho NK-R", "UD Digi Kyokasho N-R", "Meiryo", sans-serif;
+  --bg-pattern-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140' viewBox='0 0 140 140'%3E%3Cg transform='translate(36,40)'%3E%3Ccircle cx='0' cy='7' r='10' fill='%23ffffff' fill-opacity='0.65' stroke='%2338bdf8' stroke-opacity='0.22' stroke-width='1.5'/%3E%3Ccircle cx='0' cy='-7' r='7' fill='%23ffffff' fill-opacity='0.65' stroke='%2338bdf8' stroke-opacity='0.22' stroke-width='1.5'/%3E%3Cpath d='M-5-1 Q0 1 5-1' fill='none' stroke='%23f43f5e' stroke-opacity='0.2' stroke-width='2' stroke-linecap='round'/%3E%3Ccircle cx='-2.5' cy='-8' r='0.9' fill='%230f2942' fill-opacity='0.22'/%3E%3Ccircle cx='2.5' cy='-8' r='0.9' fill='%230f2942' fill-opacity='0.22'/%3E%3C/g%3E%3Cg transform='translate(104,102)'%3E%3Ccircle cx='0' cy='7' r='10' fill='%23ffffff' fill-opacity='0.65' stroke='%2338bdf8' stroke-opacity='0.22' stroke-width='1.5'/%3E%3Ccircle cx='0' cy='-7' r='7' fill='%23ffffff' fill-opacity='0.65' stroke='%2338bdf8' stroke-opacity='0.22' stroke-width='1.5'/%3E%3Cpath d='M-5-1 Q0 1 5-1' fill='none' stroke='%230284c7' stroke-opacity='0.2' stroke-width='2' stroke-linecap='round'/%3E%3Ccircle cx='-2.5' cy='-8' r='0.9' fill='%230f2942' fill-opacity='0.22'/%3E%3Ccircle cx='2.5' cy='-8' r='0.9' fill='%230f2942' fill-opacity='0.22'/%3E%3C/g%3E%3Cg transform='translate(102,32)' stroke='%2338bdf8' stroke-opacity='0.22' stroke-width='1.4' stroke-linecap='round'%3E%3Cpath d='M0-6 V6 M-6 0 H6 M-4-4 L4 4 M-4 4 L4-4'/%3E%3C/g%3E%3C/svg%3E");
+  --bg-pattern-size: 140px 140px;
+}
+
+html[data-theme="monochrome"] {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f4f4f5;
+  --bg-tertiary: #e4e4e7;
+  --bg-hover: #e4e4e7;
+  --border-color: #71717a;
+  --text-primary: #09090b;
+  --text-secondary: #3f3f46;
+  --text-muted: #52525b;
+  --primary: #18181b;
+  --primary-text: #ffffff;
+  --code-bg: #f4f4f5;
+  --active-font-weight: 800;
+  --active-text-decoration: underline;
+  --active-outline: 2px solid #18181b;
+}
+
+html[data-theme="cud"] {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f1f5f9;
+  --bg-tertiary: #e2e8f0;
+  --bg-hover: #dbeafe;
+  --border-color: #64748b;
+  --text-primary: #0f172a;
+  --text-secondary: #334155;
+  --text-muted: #475569;
+  --primary: #0072b2;
+  --primary-text: #ffffff;
+  --code-bg: #f1f5f9;
+  --active-font-weight: 700;
+  --active-text-decoration: underline;
+  --active-outline: 2px solid #0072b2;
+}

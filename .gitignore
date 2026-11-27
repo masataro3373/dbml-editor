@@ -1,0 +1,24 @@
+# 依存関係
+node_modules/
+
+# ビルド成果物
+dist/
+
+# ログディレクトリ (server.log, client.log)
+logs/
+
+# ユーザー作業ストレージ
+storage/
+
+# プラグインパッケージ (別リポジトリ dbml-editor-plugin で管理・導入)
+plugins/*.zip
+plugins/*.disabled
+
+# 環境変数・一時ファイル・デプロイアーカイブ
+.env
+.env.*
+*.log
+*.bak
+dbml-editor-*.zip
+.DS_Store
+Thumbs.db

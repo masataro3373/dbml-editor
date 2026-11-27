@@ -1,0 +1,180 @@
+/* 日本語コメント: スキーマ詳細ダッシュボードスタイル (src/components/schema-view/schema-view.css) */
+
+.dbe-schema-view {
+  padding: 1.5rem 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+
+.schema-dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 1.25rem;
+  flex-shrink: 0;
+}
+
+.schema-title-area {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.schema-dashboard-title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.schema-dialect-badge {
+  font-size: 0.75rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  background-color: var(--bg-secondary);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
+  font-weight: 600;
+}
+
+.schema-header-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* サマリーカード */
+.schema-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  flex-shrink: 0;
+}
+
+.schema-summary-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 1.15rem;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  cursor: pointer;
+  transition: transform 0.15s, border-color 0.15s;
+}
+
+.schema-summary-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--primary);
+}
+
+.schema-summary-icon {
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.schema-summary-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.schema-summary-count {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.1;
+}
+
+.schema-summary-label {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+}
+
+/* セクション */
+.schema-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.schema-section-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.schema-info-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 1.1rem 1.25rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.schema-note-text {
+  font-size: 0.875rem;
+  color: var(--text-primary);
+  line-height: 1.5;
+  white-space: pre-wrap;
+  margin: 0;
+}
+
+/* 物理属性・表領域バッジ */
+.tablespace-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 0.85rem;
+}
+
+.tablespace-group:last-child {
+  margin-bottom: 0;
+}
+
+.tablespace-group-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.tablespace-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.tablespace-badge {
+  font-size: 0.75rem;
+  padding: 0.2rem 0.55rem;
+  border-radius: 4px;
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  font-family: var(--font-family-mono);
+}
+
+/* 2列属性テーブル */
+.schema-attr-table td {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-primary);
+}
+
+.schema-attr-table tr:last-child td {
+  border-bottom: none;
+}
+
+.schema-attr-table tr:hover td {
+  background-color: var(--bg-secondary);
+}

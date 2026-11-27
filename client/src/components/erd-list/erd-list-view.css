@@ -1,0 +1,166 @@
+/* 日本語コメント: ER図一覧ビュースタイル (src/components/erd-list/erd-list-view.css)
+   v1に準拠したグリッドテーブル（固定ヘッダー、列幅リサイズ、テキスト三点リーダー省略、テーマ変数対応）のスタイリングです。 */
+
+.dbe-erd-list-view {
+  padding: 1.5rem 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.erd-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.erd-list-header h2 {
+  font-size: 1.15rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0;
+  color: var(--text-primary);
+}
+
+.erd-list-header .header-icon {
+  font-size: 1.25rem;
+}
+
+.erd-list-header .badge {
+  background-color: var(--bg-tertiary);
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-weight: normal;
+}
+
+/* テーブルラッパー（スクロール可能領域） */
+.dbe-erd-list-view .table-wrapper {
+  flex: 1;
+  min-height: 0;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  overflow: auto;
+  box-shadow: var(--shadow-sm);
+}
+
+/* 表形式テーブル本体 */
+.erd-list-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.875rem;
+  table-layout: fixed;
+}
+
+.erd-list-table th {
+  background-color: var(--bg-secondary);
+  color: var(--text-secondary);
+  font-weight: 600;
+  padding: 11px 14px;
+  border-bottom: 2px solid var(--border-color);
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  user-select: none;
+  box-sizing: border-box;
+}
+
+.erd-list-table td {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-primary);
+  box-sizing: border-box;
+}
+
+.erd-list-table th,
+.erd-list-table td {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 行ホバーハイライト */
+.erd-list-table tbody tr:hover td {
+  background-color: var(--bg-secondary);
+}
+
+/* 列幅リサイズハンドル */
+.erd-list-table th.resizable {
+  position: sticky;
+}
+
+.erd-list-table th .resizer {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 6px;
+  height: 100%;
+  cursor: col-resize;
+  user-select: none;
+  z-index: 3;
+}
+
+.erd-list-table th .resizer:hover,
+.erd-list-table th .resizer.resizing {
+  background-color: var(--primary);
+  opacity: 0.8;
+}
+
+/* ER図名リンク */
+.erd-list-table .erd-name-link {
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  max-width: 100%;
+}
+
+.erd-list-table .erd-name-link:hover {
+  text-decoration: underline;
+}
+
+.erd-list-table .erd-name-link .icon {
+  font-size: 1rem;
+}
+
+.erd-list-table .erd-name-link .name-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.erd-list-table .placeholder-text {
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+/* ER図削除ボタン */
+.btn-erd-delete {
+  background-color: transparent;
+  color: var(--danger, #dc2626);
+  border: 1px solid var(--border-color);
+  padding: 3px 8px;
+  font-size: 0.75rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.btn-erd-delete:hover {
+  background-color: var(--danger, #dc2626);
+  color: #ffffff;
+  border-color: var(--danger, #dc2626);
+}

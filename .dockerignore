@@ -1,0 +1,9 @@
+# 日本語コメント: Docker ビルド対象外の一時ファイル・作業ディレクトリ
+node_modules
+dist
+logs
+storage
+.git
+.gitignore
+.env
+*.log

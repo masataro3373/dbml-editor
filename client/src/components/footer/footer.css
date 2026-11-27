@@ -1,0 +1,38 @@
+/* 日本語コメント: フッターコンポーネントスタイル (src/components/footer/footer.css) */
+
+.dbe-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  padding: 0 1rem;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.dbe-footer-left {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dbe-footer-status-indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--success);
+}
+
+.dbe-footer-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  white-space: nowrap;
+}
+
+.dbe-footer-stat {
+  font-variant-numeric: tabular-nums;
+}

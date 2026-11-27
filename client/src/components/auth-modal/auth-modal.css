@@ -1,0 +1,99 @@
+/* 日本語コメント: 認証モーダルスタイル (src/components/auth-modal/auth-modal.css)
+   Light DOM によるログイン画面およびフォームを制御します。 */
+
+.auth-modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  /* 日本語コメント: 背景のメイン画面が透けないよう完全不透明のテーマ背景色を使用し、非表示時は display: none でフォーム監視対象から除外 */
+  background-color: var(--bg-secondary);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.auth-modal-backdrop.no-transition {
+  transition: none;
+}
+
+.auth-modal-backdrop.active {
+  display: flex;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.auth-modal-dialog {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 2.25rem;
+  width: 100%;
+  max-width: 380px;
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.auth-modal-header {
+  text-align: center;
+}
+
+.auth-modal-header h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.25rem;
+}
+
+.auth-modal-header p {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.auth-form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.auth-form-field label {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.auth-form-field input {
+  width: 100%;
+}
+
+.auth-error-message {
+  font-size: 0.8rem;
+  color: var(--danger);
+  background-color: rgba(220, 38, 38, 0.1);
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  display: none;
+}
+
+.auth-error-message.active {
+  display: block;
+}
+
+.auth-modal-btn {
+  width: 100%;
+  padding: 0.65rem;
+  font-weight: 500;
+}

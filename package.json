@@ -1,0 +1,43 @@
+{
+  "name": "dbml-editor-v2",
+  "version": "2.0.0",
+  "description": "DBML Database Design Editor with Dialect Plugins and Multi-user Support",
+  "author": "tkk",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "dev": "concurrently -k -p \"[{name}]\" -n \"SERVER,CLIENT\" -c \"cyan.bold,green.bold\" \"npm run dev:server\" \"npm run dev:client\"",
+    "dev:server": "node --watch-path=server server/app.js",
+    "dev:client": "vite",
+    "build": "vite build",
+    "start": "node server/app.js",
+    "pack:deploy": "node scripts/create-deploy-zip.js",
+    "license:generate": "node scripts/generate-licenses.js",
+    "user:manage": "node server/scripts/manage-users.js",
+    "test": "node --test tests/*.test.js",
+    "check:hardcode": "node scripts/check-hardcode.js"
+  },
+  "dependencies": {
+    "@dbml/core": "^13.0.0",
+    "cors": "^2.8.6",
+    "ejs": "^7.0.2",
+    "express": "^5.3.0",
+    "express-session": "^1.19.0",
+    "node-sql-parser": "^5.4.0",
+    "xlsx": "^0.18.5"
+  },
+  "devDependencies": {
+    "@codemirror/commands": "^6.11.1",
+    "@codemirror/lang-sql": "^6.10.0",
+    "@codemirror/language": "^6.13.1",
+    "@codemirror/state": "^6.7.6",
+    "@codemirror/view": "^6.43.15",
+    "codemirror": "^6.0.2",
+    "concurrently": "^10.0.6",
+    "vite": "^8.3.5"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "private": true
+}

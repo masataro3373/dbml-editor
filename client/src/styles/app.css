@@ -1,0 +1,406 @@
+/* 日本語コメント: アプリケーション共通スタイル (src/styles/app.css)
+   リセットCSS、共通レイアウト、タイポグラフィ、ボタンスタイルを定義します。 */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-family-sans);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 日本語コメント: ベースボタンスタイルは :where() で詳細度 0 とし、各コンポーネント側の .btn:hover 等を上書きしないようにする */
+:where(button) {
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.875rem;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+  transition: all 0.15s ease;
+}
+
+:where(button:hover:not(:disabled)) {
+  background-color: var(--bg-hover, var(--bg-tertiary));
+  outline: var(--hover-outline, none);
+}
+
+:where(button:disabled) {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+:where(button.primary) {
+  background-color: var(--primary);
+  color: var(--primary-text);
+  border-color: var(--primary);
+}
+
+:where(button.primary:hover:not(:disabled)) {
+  background-color: var(--primary-hover);
+}
+
+input, select, textarea {
+  font-family: inherit;
+  font-size: 0.875rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  outline: none;
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: var(--border-focus);
+}
+
+.card {
+  background-color: var(--bg-card);
+  border: var(--card-border-width, 1px) solid var(--border-color);
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.badge {
+  display: inline-block;
+  font-size: 0.75rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  background-color: var(--bg-tertiary);
+  color: var(--text-secondary);
+}
+
+/* ヘッダーレイアウト */
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+  background-color: var(--bg-secondary);
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.app-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.dialect-selector-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+#user-info-area {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.875rem;
+}
+
+/* メインコンテンツ */
+.app-main {
+  padding: 2rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.test-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.test-panel h2 {
+  font-size: 1.15rem;
+  font-weight: 600;
+}
+
+#active-dialect-info {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  background-color: var(--bg-secondary);
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+}
+
+.test-button-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.test-output {
+  min-height: 40px;
+  padding: 0.75rem;
+  border-radius: 6px;
+  background-color: var(--bg-secondary);
+  border: 1px dashed var(--border-color);
+  font-size: 0.85rem;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+}
+
+/* ==========================================================================
+   共通モーダルスタイル (Light DOM 共通オーバーレイ / ダイアログカード)
+   ========================================================================== */
+
+.dbe-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--overlay-bg, rgba(0, 0, 0, 0.65));
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  animation: dbeModalFadeIn 0.15s ease-out;
+}
+
+@keyframes dbeModalFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.dbe-modal-card {
+  background-color: var(--bg-card, var(--bg-surface, #ffffff));
+  border: 1px solid var(--border-color, #e2e8f0);
+  border-radius: var(--radius-md, 12px);
+  box-shadow: var(--shadow-lg, 0 16px 36px rgba(0, 0, 0, 0.35));
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  max-height: 90vh;
+  animation: dbeModalCardSlide 0.18s ease-out;
+}
+
+@keyframes dbeModalCardSlide {
+  from {
+    transform: scale(0.96) translateY(-10px);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
+}
+
+.dbe-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--border-color);
+  background-color: var(--bg-secondary);
+}
+
+.dbe-modal-header h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.dbe-modal-close {
+  background: transparent;
+  border: none;
+  font-size: 1.2rem;
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  line-height: 1;
+  border-radius: 4px;
+}
+
+.dbe-modal-close:hover {
+  background-color: var(--bg-tertiary);
+  color: var(--text-primary);
+}
+
+.dbe-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  padding: 1rem 1.25rem;
+  border-top: 1px solid var(--border-color);
+  background-color: var(--bg-secondary);
+}
+
+/* 日本語コメント: コンパクト/標準/ワイドフォームモーダルの共通幅バリエーション */
+.dbe-modal-card--compact {
+  width: 460px;
+  max-width: 92vw;
+}
+
+.dbe-modal-card--medium {
+  width: 540px;
+  max-width: 94vw;
+}
+
+.dbe-modal-card--wide {
+  width: 600px;
+  max-width: 95vw;
+}
+
+.dbe-form-row {
+  display: flex;
+  gap: 1rem;
+}
+
+.dbe-form-row > .dbe-form-field {
+  flex: 1;
+  min-width: 0;
+}
+
+.dbe-modal-body {
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  overflow-y: auto;
+}
+
+.dbe-form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.dbe-form-field label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.dbe-form-field input,
+.dbe-form-field select,
+.dbe-form-field textarea {
+  width: 100%;
+  padding: 0.55rem 0.75rem;
+  font-size: 0.9rem;
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.dbe-form-field input:focus,
+.dbe-form-field select:focus,
+.dbe-form-field textarea:focus {
+  border-color: var(--border-focus, var(--primary));
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--primary) 20%, transparent);
+}
+
+.dbe-required-mark {
+  color: var(--danger);
+  font-weight: 700;
+}
+
+.dbe-form-error {
+  padding: 0.55rem 0.75rem;
+  border-radius: 6px;
+  border: 1px solid var(--danger);
+  background-color: color-mix(in srgb, var(--danger) 10%, transparent);
+  color: var(--danger);
+  font-size: 0.82rem;
+  line-height: 1.4;
+}
+
+/* ==========================================================================
+   検索・フィルタ入力欄の右端「×」クリアボタン共通スタイル
+   ========================================================================== */
+.dbe-search-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-width: 0;
+}
+
+.dbe-search-input-wrap > input {
+  width: 100%;
+  padding-right: 1.85rem !important;
+}
+
+.dbe-search-clear-btn {
+  position: absolute;
+  right: 0.35rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1.35rem;
+  height: 1.35rem;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background-color: transparent;
+  color: var(--text-muted);
+  font-size: 1rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 2;
+  transition: background-color 0.12s ease, color 0.12s ease;
+}
+
+.dbe-search-clear-btn:hover {
+  background-color: var(--bg-tertiary);
+  color: var(--text-primary);
+}
+
+/* ==========================================================================
+   テーブルカラー 細い縦線バッジ共通スタイル
+   ========================================================================== */
+.dbe-table-color-bar {
+  display: inline-block;
+  width: 4px;
+  height: 14px;
+  border-radius: 2px;
+  flex-shrink: 0;
+  vertical-align: middle;
+}
+

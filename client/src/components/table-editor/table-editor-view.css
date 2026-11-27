@@ -1,0 +1,1073 @@
+/* 日本語コメント: v1完全準拠テーブル編集画面スタイル (src/components/table-editor/table-editor-view.css)
+   Light / Dark / Sepia 全テーマに対応し、独立スクロール・2ペインUI・デュアルリスト・固定ヘッダーを提供します。 */
+
+#slot-table-editor {
+  height: 100%;
+  min-height: 0;
+  flex: 1;
+}
+
+.dbe-table-editor-view {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-family-sans);
+}
+
+/* 1. 上段ヘッダー */
+.edit-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border-color);
+  padding: 12px 20px;
+  background-color: var(--bg-secondary);
+  flex-shrink: 0;
+}
+
+.edit-header-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.edit-table-names {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.edit-table-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.edit-table-subtitle {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.edit-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* 2. 中段タブエリア */
+.tab-section {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* タブバー: 全幅均等配置 */
+.tab-bar {
+  display: flex;
+  background-color: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-color);
+  padding: 0 16px;
+  gap: 4px;
+  flex-shrink: 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.tab-btn {
+  flex: 1 1 0;
+  min-width: 0;
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  padding: 10px 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: color 0.15s ease, border-color 0.15s ease, background-color 0.15s ease;
+  border-radius: 4px 4px 0 0;
+  text-align: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tab-btn:hover {
+  color: var(--text-primary);
+  background-color: var(--bg-tertiary);
+}
+
+.tab-btn.active {
+  color: var(--primary);
+  border-bottom-color: var(--primary);
+  background-color: var(--bg-primary);
+  font-weight: 700;
+}
+
+/* タブコンテンツエリア */
+.tab-content {
+  flex: 1;
+  min-height: 0;
+  padding: 16px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-primary);
+  box-sizing: border-box;
+}
+
+.tab-pane {
+  display: none;
+  height: 100%;
+  min-height: 0;
+  flex-direction: column;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.tab-pane.active {
+  display: flex;
+}
+
+/* 2ペインレイアウト */
+.pane-layout {
+  display: flex;
+  gap: 16px;
+  height: 100%;
+  min-height: 0;
+  width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.left-pane {
+  flex: 3;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 0;
+  height: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.right-pane {
+  flex: 2;
+  border-left: 1px solid var(--border-color);
+  padding-left: 16px;
+  overflow-y: auto;
+  min-height: 0;
+  height: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.pane-layout-single {
+  height: 100%;
+  min-height: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  box-sizing: border-box;
+}
+
+/* テーブル基本情報タブ用 2ペインフルリキッドレイアウト */
+.table-tab-layout {
+  display: flex;
+  gap: 16px;
+  height: 100%;
+  min-height: 0;
+  width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.table-tab-left {
+  flex: 1;
+  min-width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 0;
+  height: 100%;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+
+.table-tab-left .pane-form {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.table-tab-left .pane-form .form-group-note {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 120px;
+}
+
+.table-tab-left .pane-form textarea#tableNoteText {
+  flex: 1;
+  min-height: 100px;
+  resize: vertical;
+}
+
+.table-tab-right {
+  flex: 1.4;
+  min-width: 360px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 0;
+  height: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.table-tab-right .pane-form {
+  flex: 1;
+  min-height: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.table-tab-right .table-wrapper {
+  flex: 1;
+  min-height: 180px;
+  margin-top: 8px;
+  overflow: auto;
+}
+
+/* 日本語コメント: テーブルタブ右側（DBMS固有設定・拡張メタデータ）の設定値入力テキスト拡大と配置最適化 */
+.table-tab-right .tbl-attr-input {
+  font-size: 14px;
+  padding: 6px 10px;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  width: 100%;
+  box-sizing: border-box;
+  outline: none;
+}
+
+.table-tab-right .tbl-attr-input:focus {
+  border-color: var(--border-focus);
+}
+
+.table-tab-right .grid-table td {
+  vertical-align: middle;
+}
+
+/* PKタブ用 フルリキッドスタイル */
+.pk-tab-layout {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+  width: 100%;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+
+.pk-tab-layout .pane-form {
+  height: 100%;
+  min-height: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.pk-tab-layout .dual-list-container {
+  flex: 1;
+  min-height: 240px;
+  margin-top: 16px;
+}
+
+.pk-tab-layout .dual-list-wrapper {
+  height: 100%;
+  min-height: 240px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.pk-tab-layout .dual-list-wrapper select {
+  height: 100%;
+  flex: 1;
+  min-height: 200px;
+}
+
+/* グリッドテーブル */
+.table-wrapper {
+  background-color: var(--bg-card);
+  border-radius: 6px;
+  overflow: auto;
+  border: 1px solid var(--border-color);
+  flex: 1;
+  min-height: 0;
+}
+
+.grid-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  text-align: left;
+  table-layout: fixed;
+}
+
+.grid-table th,
+.grid-table td {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.grid-table th {
+  background-color: var(--bg-tertiary);
+  color: var(--text-secondary);
+  font-weight: 600;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  user-select: none;
+}
+
+.grid-table th .resizer {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 6px;
+  height: 100%;
+  cursor: col-resize;
+  user-select: none;
+  z-index: 3;
+}
+
+.grid-table th .resizer:hover,
+.grid-table th .resizer.resizing {
+  background-color: var(--primary);
+}
+
+.grid-table tbody tr {
+  cursor: pointer;
+  transition: background-color 0.1s ease;
+}
+
+.grid-table tbody tr:hover {
+  background-color: var(--bg-secondary);
+}
+
+.grid-table tbody tr.selected-row {
+  background-color: var(--bg-tertiary);
+  font-weight: 500;
+}
+
+/* 操作バー */
+.grid-actions {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.action-btn {
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid transparent;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: background-color 0.15s ease, opacity 0.15s ease;
+}
+
+.btn-success {
+  background-color: var(--success);
+  color: #ffffff;
+}
+
+.btn-success:hover {
+  opacity: 0.9;
+}
+
+.btn-danger {
+  background-color: var(--danger);
+  color: #ffffff;
+}
+
+.btn-danger:hover {
+  opacity: 0.9;
+}
+
+.btn-danger:disabled,
+.btn-success:disabled,
+.action-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* 制約バッジ */
+.badge {
+  display: inline-block;
+  padding: 1px 5px;
+  font-size: 10px;
+  font-weight: 700;
+  border-radius: 3px;
+  margin-right: 4px;
+  line-height: 1.2;
+}
+
+.badge-pk {
+  background-color: var(--warning);
+  color: #ffffff;
+}
+
+.badge-nn {
+  background-color: var(--primary);
+  color: #ffffff;
+}
+
+.badge-uq {
+  background-color: var(--success);
+  color: #ffffff;
+}
+
+/* 右ペイン詳細フォーム */
+.pane-form {
+  background-color: var(--bg-card);
+  padding: 16px;
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.pane-form h2, .pane-form h3 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin: 0 0 4px 0;
+  color: var(--text-primary);
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.form-group label {
+  font-size: 12px;
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+.form-group input[type="text"],
+.form-group input[type="number"],
+.form-group select,
+.form-group textarea {
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  padding: 6px 10px;
+  border-radius: 4px;
+  font-size: 13px;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.15s ease;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.form-group input[type="text"]:focus,
+.form-group input[type="number"]:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: var(--border-focus);
+}
+
+.form-group input:disabled,
+.form-group select:disabled,
+.form-group textarea:disabled {
+  background-color: var(--bg-tertiary);
+  color: var(--text-muted);
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.form-row-2 {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.form-row-2 .form-group {
+  flex: 1;
+}
+
+.form-group-checkboxes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 4px 0;
+}
+
+.form-group-checkboxes label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--text-primary);
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.tab-description {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+/* プレースホルダー */
+.placeholder-msg {
+  font-size: 13px;
+  color: var(--text-muted);
+  text-align: center;
+  padding: 40px 16px;
+  border: 1px dashed var(--border-color);
+  border-radius: 6px;
+  background: var(--bg-secondary);
+}
+
+/* デュアルリスト */
+.dual-list-container {
+  display: flex;
+  align-items: stretch;
+  gap: 16px;
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.dual-list-wrapper {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 12px;
+  box-sizing: border-box;
+  min-height: 0;
+}
+
+.dual-list-wrapper select {
+  flex: 1;
+  min-height: 180px;
+  height: 100%;
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  padding: 8px;
+  border-radius: 4px;
+  font-family: inherit;
+  font-size: 13px;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.dual-list-inner {
+  display: flex;
+  gap: 8px;
+  flex: 1;
+  min-height: 0;
+  height: 100%;
+}
+
+.dual-list-center-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 3. 下段フッター */
+.edit-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--border-color);
+  padding: 10px 20px;
+  background-color: var(--bg-secondary);
+  flex-shrink: 0;
+}
+
+.history-btns {
+  display: flex;
+  gap: 6px;
+}
+
+.history-btn {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: background-color 0.15s ease;
+}
+
+.history-btn:hover:not(:disabled) {
+  background-color: var(--bg-tertiary);
+}
+
+.history-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.action-btns {
+  display: flex;
+  gap: 8px;
+}
+
+.btn {
+  padding: 8px 16px;
+  border-radius: 5px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid transparent;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: background-color 0.15s ease, opacity 0.15s ease;
+}
+
+.btn-primary {
+  background-color: var(--primary);
+  color: var(--primary-text);
+}
+
+.btn-primary:hover:not(:disabled) {
+  background-color: var(--primary-hover);
+}
+
+.btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-secondary {
+  background-color: var(--bg-card);
+  border-color: var(--border-color);
+  color: var(--text-primary);
+}
+
+.btn-secondary:hover {
+  background-color: var(--bg-tertiary);
+}
+
+/* カラム拡張メタデータモーダル */
+.col-meta-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: var(--overlay-bg, rgba(0, 0, 0, 0.5));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(2px);
+}
+
+/* =========================================================================
+ * カラム編集タブ 右ペイン上下2段レイアウト（基本情報 ＋ 設計メタデータ）
+ * ========================================================================= */
+.column-detail-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  height: 100%;
+  box-sizing: border-box;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.column-detail-upper {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 12px 14px;
+}
+
+.column-detail-lower {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.col-meta-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 6px;
+}
+
+.col-meta-title {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.col-meta-title h3 {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.col-meta-subtitle {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.col-meta-settings-panel {
+  background: var(--bg-secondary);
+  border: 1px dashed var(--border-color);
+  border-radius: 4px;
+  padding: 8px 10px;
+  margin-bottom: 2px;
+}
+
+.col-meta-settings-desc {
+  font-size: 11px;
+  color: var(--text-secondary);
+  margin-bottom: 6px;
+}
+
+.col-meta-settings-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 14px;
+}
+
+.col-meta-vis-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  color: var(--text-primary);
+  cursor: pointer;
+  user-select: none;
+}
+
+.col-meta-fields-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 8px;
+  align-items: start;
+}
+
+.col-meta-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  padding: 6px 8px;
+  box-sizing: border-box;
+}
+
+.col-meta-row.col-meta-row-full {
+  grid-column: 1 / -1;
+}
+
+.col-meta-input-wrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.col-meta-field-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.col-meta-input {
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 12px;
+  padding: 4px 6px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  outline: none;
+}
+
+.col-meta-input:focus {
+  border-color: var(--border-focus);
+}
+
+.col-meta-bool-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 4px 0;
+  user-select: none;
+}
+
+.col-meta-empty-msg {
+  grid-column: 1 / -1;
+  font-size: 11px;
+  color: var(--text-muted);
+  padding: 12px;
+  text-align: center;
+  border: 1px dashed var(--border-color);
+  border-radius: 4px;
+}
+
+.col-meta-add-custom-row {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  padding-top: 6px;
+  border-top: 1px solid var(--border-color);
+  margin-top: 4px;
+}
+
+.col-meta-add-custom-row input {
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  outline: none;
+}
+
+.col-meta-add-custom-row input:focus {
+  border-color: var(--border-focus);
+}
+
+.col-meta-modal-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  width: 90%;
+  max-width: 650px;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow-lg);
+}
+
+.col-meta-modal-header {
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.col-meta-modal-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.col-meta-modal-body {
+  padding: 1.25rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.col-meta-modal-footer {
+  padding: 0.75rem 1.25rem;
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+/* 日本語コメント: タブエラーバッジ・エラーサマリーバナー・エラー行ハイライト */
+.tab-err-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  margin-left: 6px;
+  border-radius: 999px;
+  background-color: var(--danger);
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.editor-error-banner {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 8px 16px;
+  background-color: color-mix(in srgb, var(--danger) 10%, var(--bg-primary));
+  border-bottom: 1px solid color-mix(in srgb, var(--danger) 40%, var(--border-color));
+  color: var(--text-primary);
+  font-size: 12px;
+  flex-shrink: 0;
+}
+
+.editor-error-banner-title {
+  font-weight: 700;
+  color: var(--danger);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.editor-error-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  max-height: 68px;
+  overflow-y: auto;
+}
+
+.editor-error-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  border: 1px solid color-mix(in srgb, var(--danger) 45%, var(--border-color));
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 11px;
+  cursor: pointer;
+  text-align: left;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.editor-error-chip:hover {
+  background-color: color-mix(in srgb, var(--danger) 14%, var(--bg-primary));
+  border-color: var(--danger);
+}
+
+.grid-table tr.has-error-row {
+  background-color: color-mix(in srgb, var(--danger) 10%, transparent);
+}
+
+.grid-table tr.has-error-row td:first-child {
+  box-shadow: inset 3px 0 0 var(--danger);
+}
+
+.field-error-text {
+  font-size: 11px;
+  color: var(--danger);
+  margin-top: 2px;
+}
+
+/* 日本語コメント: テーブル基本情報タブのプリセットカラーパレット */
+.tbl-color-palette {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 0;
+}
+
+.tbl-color-none-btn {
+  padding: 4px 10px;
+  font-size: 12px;
+  border-radius: 4px;
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-primary);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease, background-color 0.15s ease;
+}
+
+.tbl-color-none-btn:hover {
+  background-color: var(--bg-tertiary);
+  color: var(--text-primary);
+}
+
+.tbl-color-none-btn.active {
+  border-color: var(--primary);
+  color: var(--primary);
+  font-weight: 600;
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--primary) 20%, transparent);
+}
+
+.tbl-color-swatch {
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, border-color 0.12s ease;
+}
+
+.tbl-color-swatch:hover {
+  transform: scale(1.1);
+}
+
+.tbl-color-swatch.active {
+  border-color: var(--bg-primary);
+  box-shadow: 0 0 0 2px var(--text-primary);
+  transform: scale(1.08);
+}

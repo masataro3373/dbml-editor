@@ -1,0 +1,768 @@
+/* 日本語コメント: デザインシステム・CSS変数トークン定義 (src/styles/tokens.css)
+   Light / Dark / Sepia テーマ切り替えを 0ミリ秒で実現するためのカラーパレット・フォント・サイズ定義です。 */
+
+:root,
+html[data-theme="light"] {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8fafc;
+  --bg-tertiary: #f1f5f9;
+  --bg-card: #ffffff;
+  --border-color: #e2e8f0;
+  --border-focus: #3b82f6;
+
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #94a3b8;
+
+  --primary: #2563eb;
+  --primary-hover: #1d4ed8;
+  --primary-text: #ffffff;
+
+  --success: #16a34a;
+  --warning: #d97706;
+  --danger: #dc2626;
+
+  --overlay-bg: rgba(15, 23, 42, 0.45);
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+
+  --font-family-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-family-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+
+  /* 拡張・互換サーフェストークン */
+  --bg-panel: #ffffff;
+  --bg-input: #ffffff;
+  --bg-subtle: #f8fafc;
+  --bg-hover: #e2e8f0;
+  --bg-header: #f8fafc;
+  --bg-main: #ffffff;
+  --text-main: #0f172a;
+  --accent-color: #2563eb;
+  --primary-color: #2563eb;
+  --info: #0284c7;
+
+  /* シンタックスハイライトトークン (Light) */
+  --syntax-key: #0366d6;
+  --syntax-string: #a31515;
+  --syntax-number: #098658;
+  --syntax-boolean: #0000ff;
+  --syntax-null: #64748b;
+
+  /* テクスチャ・タイポグラフィ装飾フック */
+  --bg-pattern-image: none;
+  --bg-pattern-size: auto;
+  --active-font-weight: 600;
+  --active-text-decoration: none;
+  --active-outline: none;
+  --hover-outline: none;
+  --card-border-width: 1px;
+
+  /* ER図用デザイントークン (Light) */
+  --erd-canvas-bg: #f8fafc;
+  --erd-card-bg: #ffffff;
+  --erd-header-gradient: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
+  --erd-panel-bg: rgba(255, 255, 255, 0.92);
+  --erd-subtle-bg: #f1f5f9;
+  --erd-grid-line-major: rgba(0, 0, 0, 0.07);
+  --erd-grid-line-minor: rgba(0, 0, 0, 0.025);
+}
+
+html[data-theme="dark"] {
+  --bg-primary: #0f172a;
+  --bg-secondary: #1e293b;
+  --bg-tertiary: #334155;
+  --bg-card: #1e293b;
+  --border-color: #334155;
+  --border-focus: #60a5fa;
+
+  --text-primary: #f8fafc;
+  --text-secondary: #cbd5e1;
+  --text-muted: #64748b;
+
+  --primary: #3b82f6;
+  --primary-hover: #60a5fa;
+  --primary-text: #ffffff;
+
+  --success: #22c55e;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+
+  --overlay-bg: rgba(0, 0, 0, 0.75);
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.5);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+
+  /* 拡張・互換サーフェストークン */
+  --bg-panel: #1e293b;
+  --bg-input: #0f172a;
+  --bg-subtle: #161c24;
+  --bg-hover: #334155;
+  --bg-header: #1e293b;
+  --bg-main: #0f172a;
+  --text-main: #f8fafc;
+  --accent-color: #3b82f6;
+  --primary-color: #3b82f6;
+  --info: #38bdf8;
+
+  /* シンタックスハイライトトークン (Dark) */
+  --syntax-key: #9cdcfe;
+  --syntax-string: #ce9178;
+  --syntax-number: #b5cea8;
+  --syntax-boolean: #569cd6;
+  --syntax-null: #94a3b8;
+
+  /* テクスチャ・タイポグラフィ装飾フック */
+  --bg-pattern-image: none;
+  --bg-pattern-size: auto;
+  --active-font-weight: 600;
+  --active-text-decoration: none;
+  --active-outline: none;
+  --hover-outline: none;
+  --card-border-width: 1px;
+
+  /* ER図用デザイントークン (Dark) */
+  --erd-canvas-bg: #0f141c;
+  --erd-card-bg: #1e2530;
+  --erd-header-gradient: linear-gradient(135deg, rgba(31, 36, 44, 0.95) 0%, rgba(13, 17, 23, 0.95) 100%);
+  --erd-panel-bg: rgba(24, 31, 42, 0.88);
+  --erd-subtle-bg: #161c24;
+  --erd-grid-line-major: rgba(255, 255, 255, 0.08);
+  --erd-grid-line-minor: rgba(255, 255, 255, 0.03);
+}
+
+html[data-theme="sepia"] {
+  --bg-primary: #fbf0d9;
+  --bg-secondary: #f4e3c1;
+  --bg-tertiary: #ebd4a7;
+  --bg-card: #fbf0d9;
+  --border-color: #d8c29d;
+  --border-focus: #a05a2c;
+
+  --text-primary: #433422;
+  --text-secondary: #5f4b32;
+  --text-muted: #8c7353;
+
+  --primary: #a05a2c;
+  --primary-hover: #83441b;
+  --primary-text: #ffffff;
+
+  --success: #447a38;
+  --warning: #b36b00;
+  --danger: #b33939;
+
+  --overlay-bg: rgba(67, 52, 34, 0.5);
+
+  /* 拡張・互換サーフェストークン */
+  --bg-panel: #fbf0d9;
+  --bg-input: #fbf0d9;
+  --bg-subtle: #f4e3c1;
+  --bg-hover: #ebd4a7;
+  --bg-header: #f4e3c1;
+  --bg-main: #fbf0d9;
+  --text-main: #433422;
+  --accent-color: #a05a2c;
+  --primary-color: #a05a2c;
+  --info: #2b6cb0;
+
+  /* シンタックスハイライトトークン (Sepia) */
+  --syntax-key: #7c3a14;
+  --syntax-string: #9f2d20;
+  --syntax-number: #2e6b34;
+  --syntax-boolean: #1d4f91;
+  --syntax-null: #8c7353;
+
+  /* テクスチャ・タイポグラフィ装飾フック */
+  --bg-pattern-image: none;
+  --bg-pattern-size: auto;
+  --active-font-weight: 600;
+  --active-text-decoration: none;
+  --active-outline: none;
+  --hover-outline: none;
+  --card-border-width: 1px;
+
+  /* ER図用デザイントークン (Sepia) */
+  --erd-canvas-bg: #f5e8cf;
+  --erd-card-bg: #fbf0d9;
+  --erd-header-gradient: linear-gradient(135deg, #fbf7ee 0%, #efe7d5 100%);
+  --erd-panel-bg: rgba(251, 240, 217, 0.92);
+  --erd-subtle-bg: #ebd4a7;
+  --erd-grid-line-major: rgba(67, 52, 34, 0.08);
+  --erd-grid-line-minor: rgba(67, 52, 34, 0.03);
+}
+
+/* =========================================================
+   Blueprint (設計図・方眼テクスチャ)
+   ========================================================= */
+html[data-theme="blueprint"] {
+  --bg-primary: #0a2540;
+  --bg-secondary: #0f3458;
+  --bg-tertiary: #1a4975;
+  --bg-card: #0f3458;
+  --border-color: #2b6396;
+  --border-focus: #38bdf8;
+
+  --text-primary: #f0f8ff;
+  --text-secondary: #b8daf7;
+  --text-muted: #7cb2e0;
+
+  --primary: #0284c7;
+  --primary-hover: #0ea5e9;
+  --primary-text: #ffffff;
+
+  --success: #34d399;
+  --warning: #fbbf24;
+  --danger: #fb7185;
+
+  --overlay-bg: rgba(4, 18, 34, 0.78);
+  --shadow-sm: 0 1px 2px 0 rgba(4, 18, 34, 0.45);
+  --shadow-md: 0 4px 6px -1px rgba(4, 18, 34, 0.5);
+  --shadow-lg: 0 10px 15px -3px rgba(4, 18, 34, 0.55);
+
+  /* 拡張・互換サーフェストークン */
+  --bg-panel: #0f3458;
+  --bg-input: #081e36;
+  --bg-subtle: #0c2c4c;
+  --bg-hover: #1a4975;
+  --bg-header: #0d2f50;
+  --bg-main: #0a2540;
+  --text-main: #f0f8ff;
+  --accent-color: #38bdf8;
+  --primary-color: #0284c7;
+  --info: #38bdf8;
+
+  /* シンタックスハイライトトークン (Blueprint) */
+  --syntax-key: #7dd3fc;
+  --syntax-string: #fde047;
+  --syntax-number: #6ee7b7;
+  --syntax-boolean: #f9a8d4;
+  --syntax-null: #93c5fd;
+
+  /* テクスチャ・タイポグラフィ装飾フック (設計図方眼) */
+  --bg-pattern-image:
+    linear-gradient(to right, rgba(56, 189, 248, 0.14) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(56, 189, 248, 0.14) 1px, transparent 1px),
+    linear-gradient(to right, rgba(56, 189, 248, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(56, 189, 248, 0.05) 1px, transparent 1px);
+  --bg-pattern-size: 80px 80px, 80px 80px, 16px 16px, 16px 16px;
+  --active-font-weight: 600;
+  --active-text-decoration: none;
+  --active-outline: 1px solid rgba(56, 189, 248, 0.65);
+  --hover-outline: none;
+  --card-border-width: 1px;
+
+  /* ER図用デザイントークン (Blueprint) */
+  --erd-canvas-bg: #082038;
+  --erd-card-bg: #0f3458;
+  --erd-header-gradient: linear-gradient(135deg, #13406b 0%, #0d2f50 100%);
+  --erd-panel-bg: rgba(15, 52, 88, 0.92);
+  --erd-subtle-bg: #15426d;
+  --erd-grid-line-major: rgba(56, 189, 248, 0.16);
+  --erd-grid-line-minor: rgba(56, 189, 248, 0.06);
+}
+
+/* =========================================================
+   Pastel Spring (パステル・春：淡いピンク＆桜透かし)
+   ========================================================= */
+html[data-theme="pastel-spring"] {
+  --bg-primary: #fff5f8;
+  --bg-secondary: #ffe4ee;
+  --bg-tertiary: #ffd0e0;
+  --bg-card: #fffbfd;
+  --border-color: #f4b6ca;
+  --border-focus: #db2777;
+
+  --text-primary: #4a192c;
+  --text-secondary: #7d2d4b;
+  --text-muted: #a15572;
+
+  --primary: #db2777;
+  --primary-hover: #be185d;
+  --primary-text: #ffffff;
+
+  --success: #15803d;
+  --warning: #b45309;
+  --danger: #dc2626;
+
+  --overlay-bg: rgba(74, 25, 44, 0.45);
+  --shadow-sm: 0 1px 2px 0 rgba(125, 45, 75, 0.08);
+  --shadow-md: 0 4px 6px -1px rgba(125, 45, 75, 0.12);
+  --shadow-lg: 0 10px 15px -3px rgba(125, 45, 75, 0.16);
+
+  /* パステル向け柔らかい標準フォント (外部フォント不使用) */
+  --font-family-sans: "UD Digi Kyokasho NK-R", "UD Digi Kyokasho N-R", "Meiryo", sans-serif;
+
+  /* 拡張・互換サーフェストークン */
+  --bg-panel: #ffeff5;
+  --bg-input: #ffffff;
+  --bg-subtle: #ffe9f1;
+  --bg-hover: #ffd0e0;
+  --bg-header: #ffe4ee;
+  --bg-main: #fff5f8;
+  --text-main: #4a192c;
+  --accent-color: #db2777;
+  --primary-color: #db2777;
+  --info: #0284c7;
+
+  /* シンタックスハイライトトークン (Pastel Spring) */
+  --syntax-key: #be185d;
+  --syntax-string: #9f1239;
+  --syntax-number: #15803d;
+  --syntax-boolean: #7e22ce;
+  --syntax-null: #a15572;
+
+  /* テクスチャ・タイポグラフィ装飾フック (桜の花透かし SVG) */
+  --bg-pattern-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140' viewBox='0 0 140 140'%3E%3Cg transform='translate(35,35)' fill='%23f9a8d4' fill-opacity='0.14' stroke='%23ec4899' stroke-opacity='0.16' stroke-width='1.3'%3E%3Cpath d='M0-2 C-4-8 -5-15 -2-17 L0-14 L2-17 C5-15 4-8 0-2 Z'/%3E%3Cpath d='M0-2 C-4-8 -5-15 -2-17 L0-14 L2-17 C5-15 4-8 0-2 Z' transform='rotate(72)'/%3E%3Cpath d='M0-2 C-4-8 -5-15 -2-17 L0-14 L2-17 C5-15 4-8 0-2 Z' transform='rotate(144)'/%3E%3Cpath d='M0-2 C-4-8 -5-15 -2-17 L0-14 L2-17 C5-15 4-8 0-2 Z' transform='rotate(216)'/%3E%3Cpath d='M0-2 C-4-8 -5-15 -2-17 L0-14 L2-17 C5-15 4-8 0-2 Z' transform='rotate(288)'/%3E%3Ccircle cx='0' cy='0' r='2' fill='%23ec4899' fill-opacity='0.18' stroke='none'/%3E%3C/g%3E%3Cg transform='translate(104,102) scale(0.8) rotate(22)' fill='%23f9a8d4' fill-opacity='0.14' stroke='%23ec4899' stroke-opacity='0.16' stroke-width='1.4'%3E%3Cpath d='M0-2 C-4-8 -5-15 -2-17 L0-14 L2-17 C5-15 4-8 0-2 Z'/%3E%3Cpath d='M0-2 C-4-8 -5-15 -2-17 L0-14 L2-17 C5-15 4-8 0-2 Z' transform='rotate(72)'/%3E%3Cpath d='M0-2 C-4-8 -5-15 -2-17 L0-14 L2-17 C5-15 4-8 0-2 Z' transform='rotate(144)'/%3E%3Cpath d='M0-2 C-4-8 -5-15 -2-17 L0-14 L2-17 C5-15 4-8 0-2 Z' transform='rotate(216)'/%3E%3Cpath d='M0-2 C-4-8 -5-15 -2-17 L0-14 L2-17 C5-15 4-8 0-2 Z' transform='rotate(288)'/%3E%3Ccircle cx='0' cy='0' r='2' fill='%23ec4899' fill-opacity='0.18' stroke='none'/%3E%3C/g%3E%3Cpath d='M102 26 C99 30 98 35 101 37 L102 35 L103 37 C106 35 105 30 102 26 Z' transform='rotate(35 102 32)' fill='%23f9a8d4' fill-opacity='0.14' stroke='%23ec4899' stroke-opacity='0.15' stroke-width='1.1'/%3E%3C/svg%3E");
+  --bg-pattern-size: 140px 140px;
+  --active-font-weight: 600;
+  --active-text-decoration: none;
+  --active-outline: none;
+  --hover-outline: none;
+  --card-border-width: 1px;
+
+  /* ER図用デザイントークン (Pastel Spring) */
+  --erd-canvas-bg: #fff0f5;
+  --erd-card-bg: #fffbfd;
+  --erd-header-gradient: linear-gradient(135deg, #fff5f8 0%, #ffe4ee 100%);
+  --erd-panel-bg: rgba(255, 245, 248, 0.92);
+  --erd-subtle-bg: #ffd6e5;
+  --erd-grid-line-major: rgba(161, 85, 114, 0.1);
+  --erd-grid-line-minor: rgba(161, 85, 114, 0.04);
+}
+
+/* =========================================================
+   Pastel Summer (パステル・夏：薄い緑＆スイカ透かし)
+   ========================================================= */
+html[data-theme="pastel-summer"] {
+  --bg-primary: #f2fbf4;
+  --bg-secondary: #dcfce7;
+  --bg-tertiary: #bbf7d0;
+  --bg-card: #f9fefb;
+  --border-color: #9ae6b4;
+  --border-focus: #15803d;
+
+  --text-primary: #14331d;
+  --text-secondary: #22543d;
+  --text-muted: #4a7c59;
+
+  --primary: #15803d;
+  --primary-hover: #166534;
+  --primary-text: #ffffff;
+
+  --success: #0d9488;
+  --warning: #b45309;
+  --danger: #e11d48;
+
+  --overlay-bg: rgba(20, 51, 29, 0.45);
+  --shadow-sm: 0 1px 2px 0 rgba(20, 83, 45, 0.08);
+  --shadow-md: 0 4px 6px -1px rgba(20, 83, 45, 0.12);
+  --shadow-lg: 0 10px 15px -3px rgba(20, 83, 45, 0.16);
+
+  /* パステル向け柔らかい標準フォント (外部フォント不使用) */
+  --font-family-sans: "UD Digi Kyokasho NK-R", "UD Digi Kyokasho N-R", "Meiryo", sans-serif;
+
+  /* 拡張・互換サーフェストークン */
+  --bg-panel: #ebf9ef;
+  --bg-input: #ffffff;
+  --bg-subtle: #e3f8e9;
+  --bg-hover: #bbf7d0;
+  --bg-header: #dcfce7;
+  --bg-main: #f2fbf4;
+  --text-main: #14331d;
+  --accent-color: #15803d;
+  --primary-color: #15803d;
+  --info: #0284c7;
+
+  /* シンタックスハイライトトークン (Pastel Summer) */
+  --syntax-key: #15803d;
+  --syntax-string: #be123c;
+  --syntax-number: #0f766e;
+  --syntax-boolean: #7e22ce;
+  --syntax-null: #4a7c59;
+
+  /* テクスチャ・タイポグラフィ装飾フック (スイカ透かし SVG) */
+  --bg-pattern-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140' viewBox='0 0 140 140'%3E%3Cg transform='translate(36,38) rotate(-18)'%3E%3Cpath d='M-15-4 L0 15 L15-4 Q0-11 -15-4 Z' fill='%23fb7185' fill-opacity='0.12' stroke='%23e11d48' stroke-opacity='0.15' stroke-width='1.4'/%3E%3Cpath d='M-16-5 Q0-13 16-5' fill='none' stroke='%2316a34a' stroke-opacity='0.2' stroke-width='3' stroke-linecap='round'/%3E%3Ccircle cx='-4' cy='1' r='1' fill='%2314331d' fill-opacity='0.18'/%3E%3Ccircle cx='4' cy='1' r='1' fill='%2314331d' fill-opacity='0.18'/%3E%3Ccircle cx='0' cy='6' r='1' fill='%2314331d' fill-opacity='0.18'/%3E%3C/g%3E%3Cg transform='translate(102,102) rotate(14)'%3E%3Cpath d='M-15-4 L0 15 L15-4 Q0-11 -15-4 Z' fill='%23fb7185' fill-opacity='0.12' stroke='%23e11d48' stroke-opacity='0.15' stroke-width='1.4'/%3E%3Cpath d='M-16-5 Q0-13 16-5' fill='none' stroke='%2316a34a' stroke-opacity='0.2' stroke-width='3' stroke-linecap='round'/%3E%3Ccircle cx='-4' cy='1' r='1' fill='%2314331d' fill-opacity='0.18'/%3E%3Ccircle cx='4' cy='1' r='1' fill='%2314331d' fill-opacity='0.18'/%3E%3Ccircle cx='0' cy='6' r='1' fill='%2314331d' fill-opacity='0.18'/%3E%3C/g%3E%3C/svg%3E");
+  --bg-pattern-size: 140px 140px;
+  --active-font-weight: 600;
+  --active-text-decoration: none;
+  --active-outline: none;
+  --hover-outline: none;
+  --card-border-width: 1px;
+
+  /* ER図用デザイントークン (Pastel Summer) */
+  --erd-canvas-bg: #eefaf1;
+  --erd-card-bg: #f9fefb;
+  --erd-header-gradient: linear-gradient(135deg, #f2fbf4 0%, #dcfce7 100%);
+  --erd-panel-bg: rgba(242, 251, 244, 0.92);
+  --erd-subtle-bg: #c6f6d5;
+  --erd-grid-line-major: rgba(34, 84, 61, 0.1);
+  --erd-grid-line-minor: rgba(34, 84, 61, 0.04);
+}
+
+/* =========================================================
+   Pastel Autumn (パステル・秋：淡い茶色＆カボチャ・モミジ透かし)
+   ========================================================= */
+html[data-theme="pastel-autumn"] {
+  --bg-primary: #fdf7f0;
+  --bg-secondary: #f5e6d3;
+  --bg-tertiary: #ebd3b5;
+  --bg-card: #fffcf8;
+  --border-color: #dfc19e;
+  --border-focus: #b45309;
+
+  --text-primary: #432818;
+  --text-secondary: #6f4528;
+  --text-muted: #8c6244;
+
+  --primary: #b45309;
+  --primary-hover: #92400e;
+  --primary-text: #ffffff;
+
+  --success: #4d7c0f;
+  --warning: #d97706;
+  --danger: #c2410c;
+
+  --overlay-bg: rgba(67, 40, 24, 0.45);
+  --shadow-sm: 0 1px 2px 0 rgba(111, 69, 40, 0.08);
+  --shadow-md: 0 4px 6px -1px rgba(111, 69, 40, 0.12);
+  --shadow-lg: 0 10px 15px -3px rgba(111, 69, 40, 0.16);
+
+  /* パステル向け柔らかい標準フォント (外部フォント不使用) */
+  --font-family-sans: "UD Digi Kyokasho NK-R", "UD Digi Kyokasho N-R", "Meiryo", sans-serif;
+
+  /* 拡張・互換サーフェストークン */
+  --bg-panel: #faf0e4;
+  --bg-input: #ffffff;
+  --bg-subtle: #f7ecde;
+  --bg-hover: #ebd3b5;
+  --bg-header: #f5e6d3;
+  --bg-main: #fdf7f0;
+  --text-main: #432818;
+  --accent-color: #b45309;
+  --primary-color: #b45309;
+  --info: #0284c7;
+
+  /* シンタックスハイライトトークン (Pastel Autumn) */
+  --syntax-key: #b45309;
+  --syntax-string: #9a3412;
+  --syntax-number: #4d7c0f;
+  --syntax-boolean: #7e22ce;
+  --syntax-null: #8c6244;
+
+  /* テクスチャ・タイポグラフィ装飾フック (カボチャ＆モミジ透かし SVG) */
+  --bg-pattern-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140' viewBox='0 0 140 140'%3E%3Cg fill='none' stroke='%23d97706' stroke-opacity='0.14' stroke-width='1.8'%3E%3Cellipse cx='34' cy='38' rx='14' ry='11' fill='%23fb923c' fill-opacity='0.08'/%3E%3Cellipse cx='34' cy='38' rx='7' ry='11'/%3E%3Cpath d='M34 27c0-4 2-6 5-6' stroke='%2365a30d' stroke-opacity='0.16' stroke-linecap='round'/%3E%3C/g%3E%3Cg transform='translate(102,100) rotate(-15)'%3E%3Cpath d='M0 14 L0 5 L-11 8 L-7 2 L-15-2 L-6-4 L-9-11 L-2-7 L0-15 L2-7 L9-11 L6-4 L15-2 L7 2 L11 8 L0 5 Z' fill='%23ea580c' fill-opacity='0.09' stroke='%23dc2626' stroke-opacity='0.15' stroke-width='1.3' stroke-linejoin='round'/%3E%3C/g%3E%3C/svg%3E");
+  --bg-pattern-size: 140px 140px;
+  --active-font-weight: 600;
+  --active-text-decoration: none;
+  --active-outline: none;
+  --hover-outline: none;
+  --card-border-width: 1px;
+
+  /* ER図用デザイントークン (Pastel Autumn) */
+  --erd-canvas-bg: #faf2e8;
+  --erd-card-bg: #fffcf8;
+  --erd-header-gradient: linear-gradient(135deg, #fdf7f0 0%, #f5e6d3 100%);
+  --erd-panel-bg: rgba(253, 247, 240, 0.92);
+  --erd-subtle-bg: #eedcc5;
+  --erd-grid-line-major: rgba(140, 98, 68, 0.1);
+  --erd-grid-line-minor: rgba(140, 98, 68, 0.04);
+}
+
+/* =========================================================
+   Pastel Winter (パステル・冬：雪の白・薄い青＆雪だるま透かし)
+   ========================================================= */
+html[data-theme="pastel-winter"] {
+  --bg-primary: #f6fbff;
+  --bg-secondary: #e0f2fe;
+  --bg-tertiary: #bae6fd;
+  --bg-card: #ffffff;
+  --border-color: #93c5fd;
+  --border-focus: #0284c7;
+
+  --text-primary: #0f2942;
+  --text-secondary: #1e4976;
+  --text-muted: #4b749f;
+
+  --primary: #0284c7;
+  --primary-hover: #0369a1;
+  --primary-text: #ffffff;
+
+  --success: #0d9488;
+  --warning: #b45309;
+  --danger: #dc2626;
+
+  --overlay-bg: rgba(15, 41, 66, 0.45);
+  --shadow-sm: 0 1px 2px 0 rgba(15, 41, 66, 0.07);
+  --shadow-md: 0 4px 6px -1px rgba(15, 41, 66, 0.11);
+  --shadow-lg: 0 10px 15px -3px rgba(15, 41, 66, 0.15);
+
+  /* パステル向け柔らかい標準フォント (外部フォント不使用) */
+  --font-family-sans: "UD Digi Kyokasho NK-R", "UD Digi Kyokasho N-R", "Meiryo", sans-serif;
+
+  /* 拡張・互換サーフェストークン */
+  --bg-panel: #eef7ff;
+  --bg-input: #ffffff;
+  --bg-subtle: #e6f3fe;
+  --bg-hover: #bae6fd;
+  --bg-header: #e0f2fe;
+  --bg-main: #f6fbff;
+  --text-main: #0f2942;
+  --accent-color: #0284c7;
+  --primary-color: #0284c7;
+  --info: #0ea5e9;
+
+  /* シンタックスハイライトトークン (Pastel Winter) */
+  --syntax-key: #0369a1;
+  --syntax-string: #0f766e;
+  --syntax-number: #1d4ed8;
+  --syntax-boolean: #7e22ce;
+  --syntax-null: #4b749f;
+
+  /* テクスチャ・タイポグラフィ装飾フック (雪だるま＆雪の結晶透かし SVG) */
+  --bg-pattern-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140' viewBox='0 0 140 140'%3E%3Cg transform='translate(36,40)'%3E%3Ccircle cx='0' cy='7' r='10' fill='%23ffffff' fill-opacity='0.65' stroke='%2338bdf8' stroke-opacity='0.22' stroke-width='1.5'/%3E%3Ccircle cx='0' cy='-7' r='7' fill='%23ffffff' fill-opacity='0.65' stroke='%2338bdf8' stroke-opacity='0.22' stroke-width='1.5'/%3E%3Cpath d='M-5-1 Q0 1 5-1' fill='none' stroke='%23f43f5e' stroke-opacity='0.2' stroke-width='2' stroke-linecap='round'/%3E%3Ccircle cx='-2.5' cy='-8' r='0.9' fill='%230f2942' fill-opacity='0.22'/%3E%3Ccircle cx='2.5' cy='-8' r='0.9' fill='%230f2942' fill-opacity='0.22'/%3E%3C/g%3E%3Cg transform='translate(104,102)'%3E%3Ccircle cx='0' cy='7' r='10' fill='%23ffffff' fill-opacity='0.65' stroke='%2338bdf8' stroke-opacity='0.22' stroke-width='1.5'/%3E%3Ccircle cx='0' cy='-7' r='7' fill='%23ffffff' fill-opacity='0.65' stroke='%2338bdf8' stroke-opacity='0.22' stroke-width='1.5'/%3E%3Cpath d='M-5-1 Q0 1 5-1' fill='none' stroke='%230284c7' stroke-opacity='0.2' stroke-width='2' stroke-linecap='round'/%3E%3Ccircle cx='-2.5' cy='-8' r='0.9' fill='%230f2942' fill-opacity='0.22'/%3E%3Ccircle cx='2.5' cy='-8' r='0.9' fill='%230f2942' fill-opacity='0.22'/%3E%3C/g%3E%3Cg transform='translate(102,32)' stroke='%2338bdf8' stroke-opacity='0.22' stroke-width='1.4' stroke-linecap='round'%3E%3Cpath d='M0-6 V6 M-6 0 H6 M-4-4 L4 4 M-4 4 L4-4'/%3E%3C/g%3E%3C/svg%3E");
+  --bg-pattern-size: 140px 140px;
+  --active-font-weight: 600;
+  --active-text-decoration: none;
+  --active-outline: none;
+  --hover-outline: none;
+  --card-border-width: 1px;
+
+  /* ER図用デザイントークン (Pastel Winter) */
+  --erd-canvas-bg: #f0f8ff;
+  --erd-card-bg: #ffffff;
+  --erd-header-gradient: linear-gradient(135deg, #f6fbff 0%, #e0f2fe 100%);
+  --erd-panel-bg: rgba(246, 251, 255, 0.92);
+  --erd-subtle-bg: #dbeafe;
+  --erd-grid-line-major: rgba(75, 116, 159, 0.1);
+  --erd-grid-line-minor: rgba(75, 116, 159, 0.04);
+}
+
+/* =========================================================
+   Monochrome (モノクロ・タイポグラフィ装飾)
+   ========================================================= */
+html[data-theme="monochrome"] {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f4f4f5;
+  --bg-tertiary: #e4e4e7;
+  --bg-card: #ffffff;
+  --border-color: #71717a;
+  --border-focus: #18181b;
+
+  --text-primary: #09090b;
+  --text-secondary: #3f3f46;
+  --text-muted: #52525b;
+
+  --primary: #18181b;
+  --primary-hover: #27272a;
+  --primary-text: #ffffff;
+
+  --success: #27272a;
+  --warning: #52525b;
+  --danger: #09090b;
+
+  --overlay-bg: rgba(9, 9, 11, 0.65);
+  --shadow-sm: 0 1px 2px 0 rgba(9, 9, 11, 0.08);
+  --shadow-md: 0 4px 6px -1px rgba(9, 9, 11, 0.12);
+  --shadow-lg: 0 10px 15px -3px rgba(9, 9, 11, 0.18);
+
+  /* 拡張・互換サーフェストークン */
+  --bg-panel: #fafafa;
+  --bg-input: #ffffff;
+  --bg-subtle: #f4f4f5;
+  --bg-hover: #e4e4e7;
+  --bg-header: #f4f4f5;
+  --bg-main: #ffffff;
+  --text-main: #09090b;
+  --accent-color: #18181b;
+  --primary-color: #18181b;
+  --info: #3f3f46;
+
+  /* シンタックスハイライトトークン (Monochrome) */
+  --syntax-key: #09090b;
+  --syntax-string: #3f3f46;
+  --syntax-number: #52525b;
+  --syntax-boolean: #18181b;
+  --syntax-null: #71717a;
+
+  /* テクスチャ・タイポグラフィ装飾フック (太字・下線・枠線識別) */
+  --bg-pattern-image: none;
+  --bg-pattern-size: auto;
+  --active-font-weight: 800;
+  --active-text-decoration: underline;
+  --active-outline: 2px solid #18181b;
+  --hover-outline: 1px dashed #3f3f46;
+  --card-border-width: 1.5px;
+
+  /* ER図用デザイントークン (Monochrome) */
+  --erd-canvas-bg: #fafafa;
+  --erd-card-bg: #ffffff;
+  --erd-header-gradient: linear-gradient(135deg, #ffffff 0%, #e4e4e7 100%);
+  --erd-panel-bg: rgba(255, 255, 255, 0.94);
+  --erd-subtle-bg: #e4e4e7;
+  --erd-grid-line-major: rgba(24, 24, 27, 0.12);
+  --erd-grid-line-minor: rgba(24, 24, 27, 0.04);
+}
+
+/* =========================================================
+   CUD (色弱者向け / Okabe-Ito カラーユニバーサルデザイン)
+   ========================================================= */
+html[data-theme="cud"] {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f1f5f9;
+  --bg-tertiary: #e2e8f0;
+  --bg-card: #ffffff;
+  --border-color: #64748b;
+  --border-focus: #0072b2;
+
+  --text-primary: #0f172a;
+  --text-secondary: #334155;
+  --text-muted: #475569;
+
+  --primary: #0072b2;
+  --primary-hover: #005a8e;
+  --primary-text: #ffffff;
+
+  --success: #009e73;
+  --warning: #e69f00;
+  --danger: #d55e00;
+
+  --overlay-bg: rgba(15, 23, 42, 0.6);
+  --shadow-sm: 0 1px 2px 0 rgba(15, 23, 42, 0.07);
+  --shadow-md: 0 4px 6px -1px rgba(15, 23, 42, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(15, 23, 42, 0.14);
+
+  /* 拡張・互換サーフェストークン */
+  --bg-panel: #f8fafc;
+  --bg-input: #ffffff;
+  --bg-subtle: #f1f5f9;
+  --bg-hover: #dbeafe;
+  --bg-header: #f1f5f9;
+  --bg-main: #ffffff;
+  --text-main: #0f172a;
+  --accent-color: #0072b2;
+  --primary-color: #0072b2;
+  --info: #56b4e9;
+
+  /* シンタックスハイライトトークン (CUD Okabe-Ito) */
+  --syntax-key: #0072b2;
+  --syntax-string: #d55e00;
+  --syntax-number: #009e73;
+  --syntax-boolean: #cc79a7;
+  --syntax-null: #475569;
+
+  /* テクスチャ・タイポグラフィ装飾フック (色以外の識別手がかり併用) */
+  --bg-pattern-image: none;
+  --bg-pattern-size: auto;
+  --active-font-weight: 700;
+  --active-text-decoration: underline;
+  --active-outline: 2px solid #0072b2;
+  --hover-outline: 1px solid #56b4e9;
+  --card-border-width: 1.5px;
+
+  /* ER図用デザイントークン (CUD) */
+  --erd-canvas-bg: #f8fafc;
+  --erd-card-bg: #ffffff;
+  --erd-header-gradient: linear-gradient(135deg, #ffffff 0%, #e2e8f0 100%);
+  --erd-panel-bg: rgba(255, 255, 255, 0.94);
+  --erd-subtle-bg: #e2e8f0;
+  --erd-grid-line-major: rgba(0, 114, 178, 0.12);
+  --erd-grid-line-minor: rgba(0, 114, 178, 0.04);
+}
+
+/* =========================================================
+   Frosted Glass (すりガラス / macOS Vibrancy 風テーマ)
+   ========================================================= */
+html[data-theme="frosted-glass"] {
+  --bg-primary: #e8eef8;
+  --bg-secondary: rgba(255, 255, 255, 0.50);
+  --bg-tertiary: rgba(241, 245, 252, 0.56);
+  --bg-card: rgba(255, 255, 255, 0.54);
+  --border-color: rgba(15, 23, 42, 0.12);
+  --border-focus: #007aff;
+
+  --text-primary: #1d1d1f;
+  --text-secondary: #424245;
+  --text-muted: #6e6e73;
+
+  --primary: #007aff;
+  --primary-hover: #0062cc;
+  --primary-text: #ffffff;
+
+  --success: #34c759;
+  --warning: #ff9500;
+  --danger: #ff3b30;
+
+  --overlay-bg: rgba(15, 23, 42, 0.24);
+  --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.06), 0 0 0 1px rgba(255, 255, 255, 0.55) inset;
+  --shadow-md: 0 10px 28px -4px rgba(15, 23, 42, 0.12), 0 2px 8px -1px rgba(15, 23, 42, 0.06), 0 1px 0 rgba(255, 255, 255, 0.75) inset;
+  --shadow-lg: 0 24px 48px -8px rgba(15, 23, 42, 0.18), 0 4px 14px -2px rgba(15, 23, 42, 0.08), 0 1px 0 rgba(255, 255, 255, 0.85) inset;
+
+  --font-family-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Helvetica Neue", Arial, sans-serif;
+  --font-family-mono: "SF Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  /* 拡張・互換サーフェストークン */
+  --bg-panel: rgba(255, 255, 255, 0.52);
+  --bg-input: rgba(255, 255, 255, 0.68);
+  --bg-subtle: rgba(242, 245, 250, 0.54);
+  --bg-hover: rgba(0, 122, 255, 0.12);
+  --bg-header: rgba(255, 255, 255, 0.48);
+  --bg-main: #e8eef8;
+  --text-main: #1d1d1f;
+  --accent-color: #007aff;
+  --primary-color: #007aff;
+  --info: #5ac8fa;
+
+  /* シンタックスハイライトトークン (macOS System Colors) */
+  --syntax-key: #0066cc;
+  --syntax-string: #c41a16;
+  --syntax-number: #1c00cf;
+  --syntax-boolean: #aa0d91;
+  --syntax-null: #6c6c70;
+
+  /* テクスチャ・背景グラデーションフック（すりガラス越しに透ける淡いメッシュ壁紙） */
+  --bg-pattern-image:
+    radial-gradient(at 10% 15%, rgba(0, 122, 255, 0.24) 0px, transparent 48%),
+    radial-gradient(at 88% 12%, rgba(175, 82, 222, 0.22) 0px, transparent 46%),
+    radial-gradient(at 75% 82%, rgba(90, 200, 250, 0.24) 0px, transparent 50%),
+    radial-gradient(at 22% 85%, rgba(255, 107, 157, 0.16) 0px, transparent 48%);
+  --bg-pattern-size: 100% 100%;
+  --active-font-weight: 600;
+  --active-text-decoration: none;
+  --active-outline: none;
+  --hover-outline: none;
+  --card-border-width: 1px;
+
+  /* ER図用デザイントークン (Frosted Glass) */
+  --erd-canvas-bg: transparent;
+  --erd-card-bg: rgba(255, 255, 255, 0.62);
+  --erd-header-gradient: linear-gradient(135deg, rgba(255, 255, 255, 0.78) 0%, rgba(235, 242, 255, 0.66) 100%);
+  --erd-panel-bg: rgba(255, 255, 255, 0.56);
+  --erd-subtle-bg: rgba(226, 232, 240, 0.45);
+  --erd-grid-line-major: rgba(0, 122, 255, 0.10);
+  --erd-grid-line-minor: rgba(0, 122, 255, 0.04);
+}
+
+/* すりガラス (Frosted Glass) テーマ専用: 全体背景連続化＆すりガラスぼかし効果 */
+html[data-theme="frosted-glass"] .main-layout {
+  background-color: var(--bg-primary);
+  background-image: var(--bg-pattern-image);
+  background-size: var(--bg-pattern-size);
+}
+
+html[data-theme="frosted-glass"] .pane-content {
+  background-color: transparent;
+  background-image: none;
+}
+
+html[data-theme="frosted-glass"] .pane-header,
+html[data-theme="frosted-glass"] .pane-sidebar,
+html[data-theme="frosted-glass"] .pane-footer,
+html[data-theme="frosted-glass"] .card,
+html[data-theme="frosted-glass"] .dbe-settings-modal-card,
+html[data-theme="frosted-glass"] .erd-node-card,
+html[data-theme="frosted-glass"] .header-dropdown-menu {
+  backdrop-filter: blur(22px) saturate(190%);
+  -webkit-backdrop-filter: blur(22px) saturate(190%);
+  border-color: rgba(255, 255, 255, 0.62);
+  box-shadow: var(--shadow-md);
+}

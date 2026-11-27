@@ -1,0 +1,72 @@
+/* 日本語コメント: 4ペインGridレイアウトスタイル (src/styles/layout.css)
+   v1アーキテクチャに準拠した上段ヘッダー、左側サイドバー、中央コンテンツ、下段フッターの全画面グリッドです。 */
+
+.main-layout {
+  display: grid;
+  grid-template-rows: 52px minmax(0, 1fr) 30px;
+  grid-template-columns: var(--sidebar-width, 280px) 4px 1fr;
+  grid-template-areas:
+    "header header header"
+    "sidebar resizer content"
+    "footer footer footer";
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  background-color: var(--bg-primary);
+}
+
+/* 日本語コメント: ヘッダーペイン。ドロップダウンメニューがコンテンツペイン（ER図コントロールバー等: z-index 100）の手前に表示されるよう z-index: 1000 と position: relative を指定します */
+.pane-header {
+  grid-area: header;
+  border-bottom: 1px solid var(--border-color);
+  background-color: var(--bg-secondary);
+  position: relative;
+  z-index: 1000;
+}
+
+.pane-sidebar {
+  grid-area: sidebar;
+  border-right: 1px solid var(--border-color);
+  background-color: var(--bg-secondary);
+  overflow: hidden;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 日本語コメント: サイドバーとコンテンツの間のドラッグリサイザー (スプリッター) */
+.pane-resizer {
+  grid-area: resizer;
+  width: 4px;
+  height: 100%;
+  cursor: col-resize;
+  background-color: var(--border-color);
+  user-select: none;
+  z-index: 50;
+  transition: background-color 0.15s ease;
+}
+
+.pane-resizer:hover,
+.pane-resizer.resizing {
+  background-color: var(--primary);
+}
+
+.pane-content {
+  grid-area: content;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background-color: var(--bg-primary);
+  background-image: var(--bg-pattern-image, none);
+  background-size: var(--bg-pattern-size, auto);
+  background-attachment: local;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.pane-footer {
+  grid-area: footer;
+  border-top: 1px solid var(--border-color);
+  background-color: var(--bg-secondary);
+  z-index: 100;
+}

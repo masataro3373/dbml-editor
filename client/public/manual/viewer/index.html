@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="ja" data-theme="light">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DBML Editor - 操作マニュアル</title>
+  <link rel="stylesheet" href="./viewer-themes.css" />
+  <script src="./simple-marked.js"></script>
+  <style>
+    /* 日本語コメント: リセットと全体レイアウト（外部CSS非依存） */
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+    }
+
+    body {
+      height: 100vh;
+      display: flex;
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      font-family: var(--font-family-sans);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── サイドバー（目次＆検索） ─── */
+    .sidebar {
+      width: 280px;
+      min-width: 240px;
+      border-right: 1px solid var(--border-color);
+      background-color: var(--bg-secondary);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sidebar-header {
+      padding: 12px;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .sidebar-brand {
+      font-size: 14px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--text-primary);
+    }
+
+    .sidebar-header input {
+      width: 100%;
+      padding: 6px 28px 6px 10px;
+      border-radius: 6px;
+      border: 1px solid var(--border-color);
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      font-family: inherit;
+      font-size: 12px;
+      outline: none;
+    }
+
+    .sidebar-header input:focus {
+      border-color: var(--primary);
+    }
+
+    .search-input-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .search-clear-btn {
+      position: absolute;
+      right: 6px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 18px;
+      height: 18px;
+      padding: 0;
+      border: none;
+      border-radius: 50%;
+      background-color: transparent;
+      color: var(--text-muted);
+      font-size: 14px;
+      line-height: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    .search-clear-btn:hover {
+      background-color: var(--bg-hover);
+      color: var(--text-primary);
+    }
+
+    .sidebar-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 8px 6px;
+      font-size: 13px;
+    }
+
+    .sidebar-item {
+      padding: 8px 10px;
+      margin-bottom: 2px;
+      border-radius: 6px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-primary);
+      transition: background-color 0.15s ease;
+    }
+
+    .sidebar-item:hover {
+      background-color: var(--bg-hover);
+    }
+
+    .sidebar-item.active {
+      background-color: var(--primary);
+      color: var(--primary-text);
+      font-weight: var(--active-font-weight, 600);
+      text-decoration: var(--active-text-decoration, none);
+      outline: var(--active-outline, none);
+    }
+
+    .sidebar-item .file-icon {
+      font-size: 13px;
+      flex-shrink: 0;
+    }
+
+    .sidebar-empty {
+      padding: 16px 12px;
+      font-size: 12px;
+      color: var(--text-muted);
+      text-align: center;
+    }
+
+    .sidebar-footer {
+      padding: 10px 12px;
+      border-top: 1px solid var(--border-color);
+      font-size: 12px;
+      color: var(--text-secondary);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .sidebar-footer select {
+      flex: 1;
+      padding: 4px 6px;
+      border-radius: 4px;
+      border: 1px solid var(--border-color);
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      font-family: inherit;
+      font-size: 12px;
+    }
+
+    /* ─── メインコンテンツ領域 ─── */
+    .content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      background-color: var(--bg-primary);
+      background-image: var(--bg-pattern-image, none);
+      background-size: var(--bg-pattern-size, auto);
+      background-attachment: local;
+    }
+
+    .content-header {
+      padding: 10px 20px;
+      border-bottom: 1px solid var(--border-color);
+      background-color: var(--bg-secondary);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .content-header-title {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .content-header-title span#currentTitle {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .content-header-title span.path {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-family: var(--font-family-mono);
+    }
+
+    .content-header-tools {
+      display: flex;
+      gap: 8px;
+    }
+
+    .content-header-tools button {
+      border: 1px solid var(--border-color);
+      background-color: var(--bg-tertiary);
+      color: var(--text-primary);
+      font-family: inherit;
+      font-size: 12px;
+      padding: 5px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.15s ease;
+    }
+
+    .content-header-tools button:hover {
+      background-color: var(--bg-hover);
+    }
+
+    .content-header-tools button.active {
+      background-color: var(--primary);
+      color: var(--primary-text);
+      border-color: var(--primary);
+    }
+
+    /* ─── Markdown 整形本文 ─── */
+    .content-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 24px 32px 48px;
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .content-body-inner {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .content-body h1,
+    .content-body h2,
+    .content-body h3,
+    .content-body h4 {
+      margin-top: 1.6em;
+      margin-bottom: 0.6em;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .content-body h1 {
+      margin-top: 0;
+      font-size: 24px;
+      border-bottom: 2px solid var(--border-color);
+      padding-bottom: 8px;
+    }
+
+    .content-body h2 {
+      font-size: 19px;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 4px;
+    }
+
+    .content-body h3 {
+      font-size: 16px;
+    }
+
+    .content-body p {
+      margin: 0.7em 0;
+    }
+
+    .content-body a {
+      color: var(--primary);
+      text-decoration: underline;
+    }
+
+    .content-body hr {
+      border: none;
+      border-top: 1px solid var(--border-color);
+      margin: 1.5em 0;
+    }
+
+    .content-body pre,
+    .content-body code {
+      font-family: var(--font-family-mono);
+      background-color: var(--code-bg);
+      border-radius: 4px;
+    }
+
+    .content-body pre {
+      padding: 12px 16px;
+      overflow-x: auto;
+      border: 1px solid var(--border-color);
+      margin: 0.9em 0;
+      line-height: 1.5;
+    }
+
+    .content-body pre code {
+      background: transparent;
+      padding: 0;
+      font-size: 12.5px;
+    }
+
+    .content-body code {
+      padding: 2px 5px;
+      font-size: 12.5px;
+    }
+
+    .content-body ul,
+    .content-body ol {
+      padding-left: 1.6em;
+      margin: 0.6em 0;
+    }
+
+    .content-body li {
+      margin: 0.25em 0;
+    }
+
+    .content-body blockquote {
+      margin: 0.8em 0;
+      padding: 6px 14px;
+      border-left: 4px solid var(--primary);
+      background-color: var(--bg-secondary);
+      color: var(--text-secondary);
+      border-radius: 0 6px 6px 0;
+    }
+
+    .content-body table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1em 0;
+      font-size: 13px;
+      background-color: var(--bg-primary);
+    }
+
+    .content-body th,
+    .content-body td {
+      border: 1px solid var(--border-color);
+      padding: 8px 10px;
+    }
+
+    .content-body th {
+      background-color: var(--bg-secondary);
+      font-weight: 700;
+    }
+
+    .raw-view {
+      white-space: pre-wrap;
+      word-break: break-word;
+      font-family: var(--font-family-mono);
+      font-size: 12.5px;
+      background-color: var(--code-bg);
+      padding: 16px;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+    }
+
+    @media (max-width: 768px) {
+      body {
+        flex-direction: column;
+      }
+      .sidebar {
+        width: 100%;
+        height: 220px;
+        border-right: none;
+        border-bottom: 1px solid var(--border-color);
+      }
+      .content-body {
+        padding: 16px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-brand">
+        <span>📖</span>
+        <span>DBML Editor マニュアル</span>
+        <span style="font-size: 11px; font-weight: 600; padding: 1px 6px; border-radius: 10px; background-color: var(--bg-primary); color: var(--primary); border: 1px solid var(--border-color); margin-left: auto;">v2.0.0</span>
+      </div>
+      <div class="search-input-wrap">
+        <input type="text" placeholder="キーワードで絞り込み..." id="searchInput" aria-label="マニュアル検索" />
+        <button type="button" id="searchClearBtn" class="search-clear-btn" style="display: none;" title="クリア" aria-label="検索条件をクリア">&times;</button>
+      </div>
+    </div>
+    <nav class="sidebar-list" id="sidebarList" aria-label="マニュアル目次">
+      <!-- JSで項目を生成 -->
+    </nav>
+    <div class="sidebar-footer">
+      <label for="themeSelect">テーマ:</label>
+      <select id="themeSelect" aria-label="テーマ選択">
+        <option value="light">ライト</option>
+        <option value="dark">ダーク</option>
+        <option value="sepia">セピア</option>
+        <option value="blueprint">ブループリント</option>
+        <option value="pastel-spring">パステル(spring)</option>
+        <option value="pastel-summer">パステル(summer)</option>
+        <option value="pastel-autumn">パステル(autumn)</option>
+        <option value="pastel-winter">パステル(winter)</option>
+        <option value="monochrome">モノクロ</option>
+        <option value="cud">ユニバーサル</option>
+      </select>
+    </div>
+  </aside>
+
+  <main class="content">
+    <div class="content-header">
+      <div class="content-header-title">
+        <span id="currentTitle">読み込み中...</span>
+        <span class="path" id="currentPath"></span>
+      </div>
+      <div class="content-header-tools">
+        <button type="button" id="openRawBtn" title="Markdown 原文表示の切り替え">Raw</button>
+        <button type="button" id="copyLinkBtn" title="このページのリンクをコピー">Copy Link</button>
+      </div>
+    </div>
+    <div class="content-body" id="contentBodyContainer">
+      <div class="content-body-inner" id="contentBody">
+        <!-- Markdown レンダリング結果 -->
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // 日本語コメント: 操作マニュアル一覧定義（全11章）
+    const docs = [
+      {
+        id: '01_introduction',
+        title: '01. はじめに・基本画面構成',
+        path: '../contents/01_introduction.md',
+        tags: ['overview', 'ui', 'workflow', 'login', 'menu', 'layout', 'theme', 'language', '画面', 'ログイン', 'ワークフロー', 'テーマ', '言語', '個人設定']
+      },
+      {
+        id: '02_project_and_schema',
+        title: '02. プロジェクト & スキーマ管理',
+        path: '../contents/02_project_and_schema.md',
+        tags: ['project', 'schema', 'dialect', 'tablespace', 'save', 'preview', '表領域', 'プロジェクト', 'スキーマ', '方言', '保存', 'プレビュー']
+      },
+      {
+        id: '03_table_and_column_editor',
+        title: '03. テーブル・カラム・制約の設計',
+        path: '../contents/03_table_and_column_editor.md',
+        tags: ['table', 'column', 'pk', 'fk', 'index', 'check', 'color', 'logical', 'metadata', '論理名', 'カラム', 'ヘッダカラー', '制約', '物理属性']
+      },
+      {
+        id: '04_table_group_and_note',
+        title: '04. テーブルグループ & ノート機能',
+        path: '../contents/04_table_group_and_note.md',
+        tags: ['group', 'tablegroup', 'note', 'sort', 'ノート', 'グループ', 'デュアルリスト']
+      },
+      {
+        id: '05_erd_view',
+        title: '05. ER図（実体関連図）の作成と操作',
+        path: '../contents/05_erd_view.md',
+        tags: ['erd', 'canvas', 'layout', 'diagram', 'zoom', 'memo', 'box', 'png', 'svg', 'er図', 'クロススキーマ', '付箋', '画像出力']
+      },
+      {
+        id: '06_import',
+        title: '06. インポート機能（DDL・Excel・DBML）',
+        path: '../contents/06_import.md',
+        tags: ['import', 'ddl', 'sql', 'excel', 'erstudio', 'oracle', 'dbml', 'zip', 'インポート', '設計書']
+      },
+      {
+        id: '07_export_and_docs',
+        title: '07. エクスポート & HTML仕様書出力',
+        path: '../contents/07_export_and_docs.md',
+        tags: ['export', 'sql', 'ddl', 'html', 'grid', 'card', 'java', 'csv', 'sharepoint', 'teams', 'エクスポート', '仕様書', 'グリッド']
+      },
+      {
+        id: '08_migration',
+        title: '08. マイグレーションSQL自動生成',
+        path: '../contents/08_migration.md',
+        tags: ['migration', 'diff', 'sql', 'wizard', 'oracle', '6分割', '差分', 'マイグレーション']
+      },
+      {
+        id: '09_sql_tools',
+        title: '09. SQLツール（Playground & ビジュアライザ）',
+        path: '../contents/09_sql_tools.md',
+        tags: ['playground', 'visualizer', 'sql', 'query', 'graph', 'autocomplete', 'ビジュアライザ', '補完']
+      },
+      {
+        id: '10_plugins_and_faq',
+        title: '10. プラグイン・ショートカット & FAQ',
+        path: '../contents/10_plugins_and_faq.md',
+        tags: ['plugin', 'dialect', 'shortcut', 'faq', 'oracle', 'postgres', 'mysql', 'mssql', 'spanner', 'snowflake', 'bigquery', 'redshift', 'databricks', 'プラグイン', 'ショートカット', 'よくある質問']
+      },
+      {
+        id: 'change_log',
+        title: '11. 変更履歴 (Change Log)',
+        path: '../contents/change_log.md',
+        tags: ['changelog', 'release', 'history', 'version', '履歴', '13.0.0']
+      }
+    ];
+
+    const STORAGE_THEME_KEY = 'dbml_editor_theme';
+    const LEGACY_THEME_MAP = {
+      'pastel-strawberry': 'pastel-spring',
+      'pastel-pumpkin': 'pastel-autumn'
+    };
+
+    const sidebarList = document.getElementById('sidebarList');
+    const contentBody = document.getElementById('contentBody');
+    const contentBodyContainer = document.getElementById('contentBodyContainer');
+    const currentTitle = document.getElementById('currentTitle');
+    const currentPath = document.getElementById('currentPath');
+    const searchInput = document.getElementById('searchInput');
+    const themeSelect = document.getElementById('themeSelect');
+    const openRawBtn = document.getElementById('openRawBtn');
+    const copyLinkBtn = document.getElementById('copyLinkBtn');
+
+    // URL クエリ (?doc=xx) から初期表示章を解決
+    const urlParams = new URLSearchParams(window.location.search);
+    const requestedDocId = urlParams.get('doc');
+    let currentDocId = docs.some(d => d.id === requestedDocId) ? requestedDocId : docs[0].id;
+    let isRawMode = false;
+    const bodyCache = {};
+
+    function applyTheme(themeId) {
+      const resolved = LEGACY_THEME_MAP[themeId] || themeId || 'light';
+      document.documentElement.setAttribute('data-theme', resolved);
+      if (themeSelect && Array.from(themeSelect.options).some(o => o.value === resolved)) {
+        themeSelect.value = resolved;
+      }
+    }
+
+    // 初期テーマ同期（エディタ本体と共有）
+    applyTheme(localStorage.getItem(STORAGE_THEME_KEY) || 'light');
+
+    // エディタ本体側でのテーマ変更をリアルタイム反映
+    window.addEventListener('storage', (e) => {
+      if (e.key === STORAGE_THEME_KEY && e.newValue) {
+        applyTheme(e.newValue);
+      }
+    });
+
+    themeSelect.addEventListener('change', (e) => {
+      const nextTheme = e.target.value;
+      applyTheme(nextTheme);
+      // ビューア側での変更も保存
+      localStorage.setItem(STORAGE_THEME_KEY, nextTheme);
+    });
+
+    function renderSidebar(filterText = '') {
+      sidebarList.innerHTML = '';
+      const lower = filterText.trim().toLowerCase();
+
+      const filtered = docs.filter(doc =>
+        !lower ||
+        doc.title.toLowerCase().includes(lower) ||
+        doc.path.toLowerCase().includes(lower) ||
+        (doc.tags || []).some(tag => tag.toLowerCase().includes(lower))
+      );
+
+      if (filtered.length === 0) {
+        const empty = document.createElement('div');
+        empty.className = 'sidebar-empty';
+        empty.textContent = '該当するマニュアルが見つかりません。';
+        sidebarList.appendChild(empty);
+        return;
+      }
+
+      filtered.forEach(doc => {
+        const item = document.createElement('div');
+        item.className = 'sidebar-item' + (doc.id === currentDocId ? ' active' : '');
+        item.dataset.id = doc.id;
+
+        const icon = document.createElement('span');
+        icon.className = 'file-icon';
+        icon.textContent = '📄';
+
+        const label = document.createElement('span');
+        label.textContent = doc.title;
+
+        item.appendChild(icon);
+        item.appendChild(label);
+
+        item.addEventListener('click', () => {
+          currentDocId = doc.id;
+          const nextUrl = new URL(window.location.href);
+          nextUrl.searchParams.set('doc', doc.id);
+          window.history.replaceState({}, '', nextUrl.toString());
+          renderContent(doc.id);
+          renderSidebar(searchInput.value);
+        });
+
+        sidebarList.appendChild(item);
+      });
+    }
+
+    function renderCurrentBody(rawMarkdown) {
+      if (isRawMode) {
+        const pre = document.createElement('pre');
+        pre.className = 'raw-view';
+        pre.textContent = rawMarkdown;
+        contentBody.innerHTML = '';
+        contentBody.appendChild(pre);
+      } else {
+        contentBody.innerHTML = window.SimpleMarked.parse(rawMarkdown);
+      }
+      contentBodyContainer.scrollTop = 0;
+    }
+
+    async function renderContent(docId) {
+      const doc = docs.find(d => d.id === docId);
+      if (!doc) return;
+
+      currentTitle.textContent = doc.title;
+      currentPath.textContent = doc.path.replace('../', 'manual/');
+      contentBody.innerHTML = '<p><em>読み込み中...</em></p>';
+
+      try {
+        if (!bodyCache[docId]) {
+          const res = await fetch(doc.path);
+          if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+          bodyCache[docId] = await res.text();
+        }
+        renderCurrentBody(bodyCache[docId]);
+      } catch (err) {
+        contentBody.innerHTML = `<p style="color: #dc2626;">マニュアルファイルの読み込みに失敗しました (${doc.path})。</p>`;
+      }
+    }
+
+    const searchClearBtn = document.getElementById('searchClearBtn');
+    const syncSearchClear = () => {
+      if (searchClearBtn) {
+        searchClearBtn.style.display = searchInput.value.length > 0 ? 'flex' : 'none';
+      }
+    };
+
+    searchInput.addEventListener('input', (e) => {
+      syncSearchClear();
+      renderSidebar(e.target.value);
+    });
+
+    searchClearBtn?.addEventListener('click', () => {
+      searchInput.value = '';
+      syncSearchClear();
+      renderSidebar('');
+      searchInput.focus();
+    });
+
+    searchInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && searchInput.value.length > 0) {
+        e.preventDefault();
+        searchInput.value = '';
+        syncSearchClear();
+        renderSidebar('');
+      }
+    });
+
+    openRawBtn.addEventListener('click', () => {
+      isRawMode = !isRawMode;
+      openRawBtn.classList.toggle('active', isRawMode);
+      if (bodyCache[currentDocId]) {
+        renderCurrentBody(bodyCache[currentDocId]);
+      }
+    });
+
+    copyLinkBtn.addEventListener('click', async () => {
+      const shareUrl = new URL(window.location.href);
+      shareUrl.searchParams.set('doc', currentDocId);
+      try {
+        await navigator.clipboard.writeText(shareUrl.toString());
+        const prev = copyLinkBtn.textContent;
+        copyLinkBtn.textContent = '✓ Copied!';
+        setTimeout(() => {
+          copyLinkBtn.textContent = prev;
+        }, 1500);
+      } catch {
+        window.prompt('リンクをコピーしてください:', shareUrl.toString());
+      }
+    });
+
+    // 初期表示
+    renderSidebar();
+    renderContent(currentDocId);
+  </script>
+</body>
+
+</html>

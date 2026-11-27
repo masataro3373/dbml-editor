@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ja" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DBML Editor</title>
+  <link rel="stylesheet" href="/src/styles/tokens.css" />
+  <link rel="stylesheet" href="/src/styles/layout.css" />
+  <link rel="stylesheet" href="/src/styles/app.css" />
+  <link rel="stylesheet" href="/src/components/loading-overlay/loading-overlay.css" />
+  <link rel="stylesheet" href="/src/components/auth-modal/auth-modal.css" />
+  <link rel="stylesheet" href="/src/components/header/header.css" />
+  <link rel="stylesheet" href="/src/components/footer/footer.css" />
+  <link rel="stylesheet" href="/src/components/object-tree/object-tree.css" />
+  <link rel="stylesheet" href="/src/components/project-view/project-view.css" />
+  <link rel="stylesheet" href="/src/components/schema-list/schema-list-view.css" />
+  <link rel="stylesheet" href="/src/components/schema-view/schema-view.css" />
+  <link rel="stylesheet" href="/src/components/schema-modal/schema-modal.css" />
+  <link rel="stylesheet" href="/src/components/table-list/table-list-view.css" />
+  <link rel="stylesheet" href="/src/components/table-view/table-view.css" />
+  <link rel="stylesheet" href="/src/components/table-editor/table-editor-view.css" />
+  <link rel="stylesheet" href="/src/components/table-group-modal/table-group-modal.css" />
+  <link rel="stylesheet" href="/src/components/table-group-list/table-group-list-view.css" />
+  <link rel="stylesheet" href="/src/components/table-group-view/table-group-view.css" />
+  <link rel="stylesheet" href="/src/components/note-modal/note-modal.css" />
+  <link rel="stylesheet" href="/src/components/note-list/note-list-view.css" />
+  <link rel="stylesheet" href="/src/components/note-view/note-view.css" />
+  <link rel="stylesheet" href="/src/components/erd-list/erd-list-view.css" />
+  <link rel="stylesheet" href="/src/components/dbml-preview/dbml-preview.css" />
+</head>
+<body>
+  <!-- 日本語コメント: アプリケーションマウントポイント (Light DOM) -->
+  <div id="app"></div>
+
+  <!-- 日本語コメント: ローディング/プログレス表示オーバーレイ -->
+  <div id="loading-overlay-container"></div>
+
+  <!-- 日本語コメント: 認証モーダルコンテナ -->
+  <div id="auth-modal-container"></div>
+
+  <!-- 日本語コメント: クライアント初期化エントリポイント -->
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
